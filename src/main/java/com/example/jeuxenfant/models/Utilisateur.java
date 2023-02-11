@@ -15,7 +15,7 @@ public class Utilisateur{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String type;
+    private ChoixDeType type;
     private int reponse;
 
 }
