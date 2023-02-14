@@ -6,40 +6,24 @@ import {Router} from "@angular/router";
 @Injectable({providedIn: 'root'})
 export class UtilisateurService {
   private apiServiceUrl = environment.apiBaseUrl;
-  private type = localStorage.getItem("type")
+  private type : string = "";
 
   constructor(private http: HttpClient, private router: Router) {
 
   }
 
-  public setType():void{
-    this.http.get<string>(`${this.apiServiceUrl}/chiffres`).subscribe(
-      {
-        next: type => {
-          if(type){
-            localStorage.setItem("type", type);
-          }
-        }
-      }
-    );
-  }
-
-  public setTypeFrancais():void{
-    this.http.get<string>(`${this.apiServiceUrl}/francais`).subscribe(
-      {
-        next: type => {
-          if(type){
-            localStorage.setItem("type", type);
-          }
-        }
-      }
-    );
+  public setType(type : string):void{
+    if(type){
+      localStorage.setItem("typeDeChoix", type);
+    }
+    this.http.get<string>(`${this.apiServiceUrl}/menu/${type.toLowerCase()}`)
   }
 
   public getType():string{
-    if(this.type == null){
-      return "";
+    const typeDeChoix = localStorage.getItem("typeDeChoix")
+    if(typeDeChoix){
+       return  this.type = typeDeChoix;
     }
-    return this.type;
+    return "";
   }
 }

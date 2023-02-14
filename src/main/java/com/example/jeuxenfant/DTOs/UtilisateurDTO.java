@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UtilisateurDTO {
 
-    private String type;
+    private ChoixDeTypeDTO type;
     private int reponse;
 
 }

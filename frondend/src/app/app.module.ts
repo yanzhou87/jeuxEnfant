@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { PageprincipalComponent } from './pageprincipal/pageprincipal.component';
 import { UtilisateurService } from './services/services.component';
 import { HttpClientModule } from "@angular/common/http";
+import { PagemenuComponent } from './pagemenu/pagemenu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageprincipalComponent
+    PageprincipalComponent,
+    PagemenuComponent
   ],
   imports: [
     BrowserModule,

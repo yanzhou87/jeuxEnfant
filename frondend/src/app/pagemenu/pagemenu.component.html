@@ -1,0 +1,22 @@
+<div class="bg-warning vh-100">
+  <nav>
+    <div class="container-fluid">
+      <div class="row">
+        <h1 class="col-4">Jeux enfant</h1>
+      </div>
+    </div>
+  </nav>
+  <div class="btn-group-vertical position-absolute top-50 start-50 translate-middle">
+    <div class="container-fluid">
+      <div class="row">
+        <a class="m-3 btn btn-info text-light" routerLink="/apprendre" (click)="setType('APPRENDRE')">Apprendre</a>
+      </div>
+      <div class="row">
+        <a class="m-3 btn btn-primary text-light" routerLink="/jeux" (click)="setType('JEUX')">Jeux</a>
+      </div>
+      <div class="row">
+        <a class="m-3 btn btn-danger text-light" routerLink="/" (click)="setType('DEFAUT')">Retourner</a>
+      </div>
+    </div>
+  </div>
+</div>

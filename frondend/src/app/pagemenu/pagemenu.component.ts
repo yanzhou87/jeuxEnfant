@@ -2,17 +2,23 @@ import { Component } from '@angular/core';
 import {UtilisateurService} from "../services/services.component";
 
 @Component({
-  selector: 'app-pageprincipal',
-  templateUrl: './pageprincipal.component.html',
-  styleUrls: ['./pageprincipal.component.css']
+  selector: 'app-pagemenu',
+  templateUrl: './pagemenu.component.html',
+  styleUrls: ['./pagemenu.component.css']
 })
-export class PageprincipalComponent {
+export class PagemenuComponent {
 
+  type : string = "";
   constructor(private utilisateurService: UtilisateurService) {
 
   }
 
   setType(type : string){
     this.utilisateurService.setType(type);
+    this.getType()
+  }
+
+  getType(){
+    this.type = this.utilisateurService.getType()
   }
 }

@@ -1,20 +1,31 @@
 package com.example.jeuxenfant.services;
 
+import com.example.jeuxenfant.DTOs.ChoixDeTypeDTO;
 import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.models.ChoixDeType;
-import com.example.jeuxenfant.models.Utilisateur;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ServiceJeuxEnfant {
-    private UtilisateurDTO utilisateurCourrant;
+    private UtilisateurDTO utilisateurCourrant = new UtilisateurDTO();
 
-    public UtilisateurDTO saveType(ChoixDeType type){
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setType(type);
-        this.utilisateurCourrant.setType(utilisateur.getType().toString());
-        this.utilisateurCourrant.setReponse(utilisateur.getReponse());
+    public UtilisateurDTO saveType(String type){
+        if(type.equals(ChoixDeTypeDTO.DEFAUT.toString())){
+            this.utilisateurCourrant.setType(ChoixDeTypeDTO.DEFAUT);
+        }
+        if(type.equals(ChoixDeType.CHIFFRES.toString())){
+            this.utilisateurCourrant.setType(ChoixDeTypeDTO.CHIFFRES);
+        }
+        if(type.equals(ChoixDeType.FRANCAIS.toString())){
+            this.utilisateurCourrant.setType(ChoixDeTypeDTO.FRANCAIS);
+        }
+        if(type.equals(ChoixDeType.APPRENDRE.toString())){
+            this.utilisateurCourrant.setType(ChoixDeTypeDTO.APPRENDRE);
+        }
+        if(type.equals(ChoixDeType.JEUX.toString())){
+            this.utilisateurCourrant.setType(ChoixDeTypeDTO.JEUX);
+        }
+
         return utilisateurCourrant;
     }
-
 }
