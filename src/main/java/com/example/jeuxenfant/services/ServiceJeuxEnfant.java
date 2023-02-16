@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 public class ServiceJeuxEnfant {
     private UtilisateurDTO utilisateurCourrant = new UtilisateurDTO();
 
+    public ServiceJeuxEnfant() {
+    }
+
     public UtilisateurDTO saveType(String type){
         if(type.equals(ChoixDeTypeDTO.DEFAUT.toString())){
             this.utilisateurCourrant.setType(ChoixDeTypeDTO.DEFAUT);

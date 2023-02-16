@@ -18,8 +18,13 @@ public class JeuxEnfantController {
 
     @GetMapping("/menu/{type}")
     public ResponseEntity<String> getLaPageChiffres(@PathVariable String type) {
-        if(type != null){
-            return new ResponseEntity<>(serviceJeuxEnfant.saveType(type.toLowerCase()).getType().toString(), HttpStatus.OK);
+        try{
+            if(type != null){
+                String typeRetourne = serviceJeuxEnfant.saveType(type.toLowerCase()).getType().toString();
+                return ResponseEntity.ok(typeRetourne);
+            }
+        }catch (Exception message){
+            return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>("DEFAUT", HttpStatus.OK);
     }
