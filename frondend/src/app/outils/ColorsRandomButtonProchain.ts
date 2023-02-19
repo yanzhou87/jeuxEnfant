@@ -1,0 +1,3 @@
+export enum ColorsRandomProchain {
+  LAVENDERBLUSH=("#FFF0F5"),LIGHTPINK=("#FFB6C1"),ORANGERED=("#FF4500"),PINK=("#FFC0CB"), VIOLET=("#EE82EE")
+}

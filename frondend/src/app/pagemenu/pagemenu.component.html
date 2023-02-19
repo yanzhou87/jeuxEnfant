@@ -9,13 +9,13 @@
   <div class="btn-group-vertical position-absolute top-50 start-50 translate-middle">
     <div class="container-fluid">
       <div class="row">
-        <a class="m-3 btn btn-info text-light" routerLink="/apprendre" (click)="setType('APPRENDRE')">Apprendre</a>
+        <a class="m-3 btn btn-info text-light" routerLink="/apprendre" (click)="setType(typeApprendre)">Apprendre</a>
       </div>
       <div class="row">
-        <a class="m-3 btn btn-primary text-light" routerLink="/jeux" (click)="setType('JEUX')">Jeux</a>
+        <a class="m-3 btn btn-primary text-light" routerLink="/jeux" (click)="setType(typeJeux)">Jeux</a>
       </div>
       <div class="row">
-        <a class="m-3 btn btn-danger text-light" routerLink="/" (click)="setType('DEFAUT')">Retourner</a>
+        <a class="m-3 btn btn-danger text-light" routerLink="/" (click)="setType(typeDefaut)">Retourner</a>
       </div>
     </div>
   </div>

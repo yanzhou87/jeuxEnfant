@@ -1,0 +1,31 @@
+<div class="vh-100" [style.background-color]="randomColorBackground">
+  <nav>
+    <div class="container-fluid">
+      <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
+        <h1 class="col-4">Jeux enfant</h1>
+        <a class="m-3 btn btn-danger btn-sm text-light" style="width: 100px" routerLink="/">Retourner</a>
+      </div>
+      <div class="row">
+
+      </div>
+    </div>
+  </nav>
+  <div class="btn-group-vertical position-absolute top-50 start-50 translate-middle">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="card" style="width: 38rem; height: 15rem;">
+          <div class="card-body">
+            <p class="card-text text-center display-1 m-5">{{ chiffers }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
+        <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonPrecedent"
+                style="width: 200px" (click)="setChiffresPrecedent()">Précédent</button>
+        <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonProchain"
+                style="width: 200px" (click)="setChiffresProchain()">Prochain</button>
+      </div>
+    </div>
+  </div>
+</div>
+

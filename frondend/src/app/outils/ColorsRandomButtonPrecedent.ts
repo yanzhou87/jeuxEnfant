@@ -1,0 +1,3 @@
+export enum ColorsRandomPrecedent {
+  FLORALWHITE=("#FFFAF0"),QOLD=("#FFD700"),LEMONCHIFFON=("#FFFACD"),LIGHTGOLDENRODYELLOW=("#FAFAD2")
+}

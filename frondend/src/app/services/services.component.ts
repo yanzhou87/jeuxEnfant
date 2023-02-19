@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
+import {TypeDeChoix} from "../outils/typedechoix";
 
 @Injectable({providedIn: 'root'})
 export class UtilisateurService {
@@ -12,11 +13,11 @@ export class UtilisateurService {
 
   }
 
-  public setType(type : string):void{
+  public setType(type : TypeDeChoix):void{
     if(type){
-      localStorage.setItem("typeDeChoix", type);
+      localStorage.setItem("typeDeChoix", type.toString());
     }
-    this.http.get<string>(`${this.apiServiceUrl}/menu/${type.toLowerCase()}`)
+    this.http.get<string>(`${this.apiServiceUrl}/menu/${type.toString().toLowerCase()}`)
   }
 
   public getType():string{

@@ -7,12 +7,14 @@ import { PageprincipalComponent } from './pageprincipal/pageprincipal.component'
 import { UtilisateurService } from './services/services.component';
 import { HttpClientModule } from "@angular/common/http";
 import { PagemenuComponent } from './pagemenu/pagemenu.component';
+import { PageApprendrePourTypeChiffresComponent } from './page-apprendre-pour-type-chiffres/page-apprendre-pour-type-chiffres.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageprincipalComponent,
-    PagemenuComponent
+    PagemenuComponent,
+    PageApprendrePourTypeChiffresComponent
   ],
   imports: [
     BrowserModule,
