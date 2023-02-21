@@ -1,5 +1,7 @@
 package com.example.jeuxenfant.models;
 
+import com.example.jeuxenfant.DTOs.ChoixDeType;
+import com.example.jeuxenfant.DTOs.TypePrincipal;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +18,7 @@ public class Utilisateur{
     private Long id;
 
     private ChoixDeType type;
+    private TypePrincipal typePrincipal;
     private int reponse;
 
 }

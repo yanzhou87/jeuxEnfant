@@ -1,14 +1,18 @@
 package com.example.jeuxenfant.serviceTest;
 
 
-import com.example.jeuxenfant.DTOs.ChoixDeTypeDTO;
+import com.example.jeuxenfant.DTOs.ChoixDeType;
+import com.example.jeuxenfant.DTOs.TypePrincipal;
 import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
+import com.fasterxml.jackson.databind.type.TypeParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.lang.reflect.Type;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -19,31 +23,43 @@ public class ServiceTest {
     ServiceJeuxEnfant serviceJeuxEnfant;
     String typeFransais;
     String typeChiffres;
+    String typeApprendre;
 
     UtilisateurDTO utilisateurAvecTypeFrancais;
+    UtilisateurDTO utilisateurAvecTypeApprendre;
     @BeforeEach
     void setup() {
         typeFransais = "FRANCAIS";
         typeChiffres = "CHIFFRES";
-        utilisateurAvecTypeFrancais = serviceJeuxEnfant.saveType(typeFransais);
+        typeApprendre = "APPRENDRE";
+
+        utilisateurAvecTypeFrancais = serviceJeuxEnfant.saveTypePrincipe(typeFransais);
+        utilisateurAvecTypeApprendre = serviceJeuxEnfant.saveType(typeApprendre);
     }
 
+    @Test
+    void typePrincipeHappyDayTest() throws Exception {
+        // Arrange
+        // Act
+        // Assert
+         assertThat(utilisateurAvecTypeFrancais.getTypePrincipal()).isEqualTo(TypePrincipal.FRANCAIS);
+    }
     @Test
     void typeDeChoixHappyDayTest() throws Exception {
         // Arrange
         // Act
         // Assert
-        assertThat(utilisateurAvecTypeFrancais.getType()).isEqualTo(ChoixDeTypeDTO.FRANCAIS);
+        assertThat(utilisateurAvecTypeApprendre.getType()).isEqualTo(ChoixDeType.APPRENDRE);
     }
 
     @Test
-    void typeDeChoixBadTest() throws Exception {
+    void typePrincipeBadTest() throws Exception {
         // Arrange
 
         // Act
-        UtilisateurDTO utilisateurAvecTypeChiffres = serviceJeuxEnfant.saveType(typeChiffres);
+        UtilisateurDTO utilisateurAvecTypeChiffres = serviceJeuxEnfant.saveTypePrincipe(typeChiffres);
         // Assert
-        assertThat(utilisateurAvecTypeFrancais.getType()).isNotEqualTo("");
+        assertThat(utilisateurAvecTypeFrancais.getTypePrincipal()).isNotEqualTo("");
         assertThat(utilisateurAvecTypeChiffres).isNotEqualTo(typeFransais);
 
     }

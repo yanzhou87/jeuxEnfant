@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {UtilisateurService} from "../services/services.component";
-import {TypeDeChoix} from "../outils/typedechoix";
+import {Typeprincipal} from "../outils/typeprincipal";
 
 @Component({
   selector: 'app-pageprincipal',
@@ -9,14 +9,14 @@ import {TypeDeChoix} from "../outils/typedechoix";
 })
 export class PageprincipalComponent {
 
-  typeFrancais : TypeDeChoix = TypeDeChoix.FRANCAIS;
-  typeChiffres : TypeDeChoix = TypeDeChoix.CHIFFRES;
+  typeFrancais : Typeprincipal = Typeprincipal.FRANCAIS;
+  typeChiffres : Typeprincipal = Typeprincipal.CHIFFRES;
 
   constructor(private utilisateurService: UtilisateurService) {
 
   }
 
-  setType(type : TypeDeChoix){
-    this.utilisateurService.setType(type);
+  setTypePrincipal(type : Typeprincipal){
+    this.utilisateurService.setTypePrincipal(type);
   }
 }

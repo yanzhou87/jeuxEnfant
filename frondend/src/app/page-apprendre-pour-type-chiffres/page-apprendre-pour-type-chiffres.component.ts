@@ -36,12 +36,14 @@ export class PageApprendrePourTypeChiffresComponent {
   setChiffresPrecedent(){
     if(this.chiffers != 0){
       this.chiffers -= 1;
+      this.randomColorBackground = this.getRandomColorBackground();
     }
   }
 
   setChiffresProchain(){
     if(this.chiffers != 10){
       this.chiffers += 1;
+      this.randomColorBackground = this.getRandomColorBackground();
     }
   }
 }

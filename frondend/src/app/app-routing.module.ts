@@ -9,7 +9,7 @@ import {
 const routes: Routes = [
   { path: '', component: PageprincipalComponent, pathMatch:'full'},
   { path: 'menu', component: PagemenuComponent},
-  { path: 'apprendre', component: PageApprendrePourTypeChiffresComponent},
+  { path: 'apprendreavecletypechiffres', component: PageApprendrePourTypeChiffresComponent},
 
 ];
 

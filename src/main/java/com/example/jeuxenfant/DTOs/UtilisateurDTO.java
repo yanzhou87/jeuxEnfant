@@ -3,13 +3,22 @@ package com.example.jeuxenfant.DTOs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class UtilisateurDTO {
 
-    private ChoixDeTypeDTO type;
-    private int reponse;
+    private ChoixDeType type;
+    private TypePrincipal typePrincipal;
 
+    public UtilisateurDTO(ChoixDeType type) {
+        this.type = type;
+    }
+
+    public UtilisateurDTO(TypePrincipal typePrincipal) {
+        this.typePrincipal = typePrincipal;
+    }
 }

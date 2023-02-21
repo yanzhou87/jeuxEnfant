@@ -1,9 +1,8 @@
 package com.example.jeuxenfant.controllerTest;
 
 
-import ch.qos.logback.core.joran.event.SaxEventRecorder;
-
-import com.example.jeuxenfant.DTOs.ChoixDeTypeDTO;
+import com.example.jeuxenfant.DTOs.ChoixDeType;
+import com.example.jeuxenfant.DTOs.TypePrincipal;
 import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.controllers.JeuxEnfantController;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
@@ -11,18 +10,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -32,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class ControllerTest {
     private static final String PAGE_CHIFFRES_URL = "/menu/{type}";
+    private static final String PAGE_PRINCIPAL_URL = "/menu";
     MockMvc mockMvc;
 
     @InjectMocks
@@ -40,7 +40,7 @@ public class ControllerTest {
     ServiceJeuxEnfant serviceJeuxEnfant;
 
     JacksonTester<UtilisateurDTO> utilisateurDTOJacksonTester ;
-    UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+
     @BeforeEach
     void setup() {
        // CHIFFRES,FRANCAIS,APPRENDRE,JEUX,DEFAUT
@@ -48,18 +48,37 @@ public class ControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(jeuxEnfantController).build();
     }
     @Test
+    void testPagePrincipeHappyDay()throws Exception{
+        // Arrange
+        String type = "chiffres";
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setType(ChoixDeType.DEFAUT);
+        when(serviceJeuxEnfant.saveTypePrincipe(type)).thenReturn(utilisateurDTO);
+
+        // Act
+        ResponseEntity<UtilisateurDTO> response = jeuxEnfantController.getTypePrincipal(type);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(utilisateurDTO, response.getBody());
+
+    }
+    @Test
     void testParametreHappyDay()throws Exception{
-       /* utilisateurDTO.setType(ChoixDeTypeDTO.CHIFFRES);
+        // Arrange
+        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO(TypePrincipal.CHIFFRES);
         String typeDeChoix = "chiffres";
-        when(serviceJeuxEnfant.saveType("CHIFFRES")).thenReturn(utilisateurDTO);
-        mockMvc.perform(MockMvcRequestBuilders.get(PAGE_CHIFFRES_URL,typeDeChoix))
-                .andExpect(status().isOk());*/
+        when(serviceJeuxEnfant.saveType("chiffres")).thenReturn(utilisateurDTO);
+
+        // Act-Assert
+        mockMvc.perform(MockMvcRequestBuilders.get(PAGE_CHIFFRES_URL, typeDeChoix))
+                .andExpect(status().isOk());
     }
 
     @Test
     void testCreateEtudiantBadRequest() throws Exception {
 
-        mockMvc.perform(get("/menu"))
+        mockMvc.perform(get("/menus"))
                 .andExpect(status().isNotFound());
     }
 

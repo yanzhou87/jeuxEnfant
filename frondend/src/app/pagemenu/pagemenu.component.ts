@@ -14,16 +14,25 @@ export class PagemenuComponent {
   typeJeux : TypeDeChoix = TypeDeChoix.JEUX;
   typeDefaut : TypeDeChoix = TypeDeChoix.DEFAUT;
 
+  typeChiffre : boolean = false;
   constructor(private utilisateurService: UtilisateurService) {
-
+    this.type = utilisateurService.getTypePrincipal()
+    this.typeChiffre = this.estTypeChiffre()
   }
 
-  setType(type : TypeDeChoix ){
-    this.utilisateurService.setType(type);
+  setTypeDeChoix(type : TypeDeChoix ){
+    this.utilisateurService.setTypeDeChoix(type);
     this.getType()
   }
 
   getType(){
-    this.type = this.utilisateurService.getType()
+    this.type = this.utilisateurService.getTypeDeChoix();
+  }
+
+  estTypeChiffre() : boolean{
+    if (this.type == "chiffres"){
+      return true;
+    }
+    return false
   }
 }

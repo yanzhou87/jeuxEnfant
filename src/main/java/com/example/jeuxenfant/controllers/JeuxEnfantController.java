@@ -4,6 +4,8 @@ import com.example.jeuxenfant.services.ServiceJeuxEnfant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.jeuxenfant.DTOs.ChoixDeType;
+import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 
 @RestController
 @RequestMapping("/")
@@ -17,15 +19,28 @@ public class JeuxEnfantController {
     }
 
     @GetMapping("/menu/{type}")
-    public ResponseEntity<String> getLaPageChiffres(@PathVariable String type) {
+    public ResponseEntity<UtilisateurDTO> getLaPageChiffres(@PathVariable String type) {
         try{
             if(type != null){
-                String typeRetourne = serviceJeuxEnfant.saveType(type.toLowerCase()).getType().toString();
-                return ResponseEntity.ok(typeRetourne);
+                UtilisateurDTO utilisateurDTO = serviceJeuxEnfant.saveType(type);
+                return ResponseEntity.ok(utilisateurDTO);
             }
         }catch (Exception message){
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>("DEFAUT", HttpStatus.OK);
+        return new ResponseEntity<>(new UtilisateurDTO(ChoixDeType.DEFAUT), HttpStatus.OK);
+    }
+
+    @PutMapping("/menu")
+    public ResponseEntity<UtilisateurDTO> getTypePrincipal(@RequestBody String type) {
+        try{
+            if(type != null){
+                UtilisateurDTO utilisateurDTO = serviceJeuxEnfant.saveTypePrincipe(type);
+                return ResponseEntity.ok(utilisateurDTO);
+            }
+        }catch (Exception message){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(new UtilisateurDTO(ChoixDeType.DEFAUT), HttpStatus.OK);
     }
 }
