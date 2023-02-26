@@ -21,9 +21,12 @@ public class JeuxEnfantController {
     @GetMapping("/menu/{type}")
     public ResponseEntity<UtilisateurDTO> getLaPageChiffres(@PathVariable String type) {
         try{
-            if(type != null){
+            if(type != null && serviceJeuxEnfant.saveType(type) != null){
                 UtilisateurDTO utilisateurDTO = serviceJeuxEnfant.saveType(type);
                 return ResponseEntity.ok(utilisateurDTO);
+            }
+            if(serviceJeuxEnfant.saveType(type) == null){
+                return ResponseEntity.badRequest().build();
             }
         }catch (Exception message){
             return ResponseEntity.notFound().build();
@@ -34,9 +37,12 @@ public class JeuxEnfantController {
     @PutMapping("/menu")
     public ResponseEntity<UtilisateurDTO> getTypePrincipal(@RequestBody String type) {
         try{
-            if(type != null){
+            if(type != null && serviceJeuxEnfant.saveTypePrincipe(type) != null){
                 UtilisateurDTO utilisateurDTO = serviceJeuxEnfant.saveTypePrincipe(type);
                 return ResponseEntity.ok(utilisateurDTO);
+            }
+            if(serviceJeuxEnfant.saveTypePrincipe(type) == null){
+                return ResponseEntity.badRequest().build();
             }
         }catch (Exception message){
             return ResponseEntity.notFound().build();

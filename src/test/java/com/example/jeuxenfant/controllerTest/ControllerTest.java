@@ -50,7 +50,7 @@ public class ControllerTest {
     @Test
     void testPagePrincipeHappyDay()throws Exception{
         // Arrange
-        String type = "chiffres";
+        String type = "chiffres";// CHIFFRES,FRANCAIS,
         UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
         utilisateurDTO.setType(ChoixDeType.DEFAUT);
         when(serviceJeuxEnfant.saveTypePrincipe(type)).thenReturn(utilisateurDTO);
@@ -64,28 +64,40 @@ public class ControllerTest {
 
     }
     @Test
-    void testParametreHappyDay()throws Exception{
+    void testPagePrincipaleUrlNotFound() throws Exception {
+
+        mockMvc.perform(get("/menue"))
+                .andExpect(status().isNotFound());
+    }
+    @Test
+    void testPagePrincipalParamettreBadRequest() throws Exception {
+        String mauvaisType = "mauvaisType";
+        mockMvc.perform(MockMvcRequestBuilders.put(PAGE_PRINCIPAL_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mauvaisType))
+                .andExpect(status().isBadRequest());
+    }
+    @Test
+    void testMenuParametreHappyDay()throws Exception{
         // Arrange
-        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO(TypePrincipal.CHIFFRES);
-        String typeDeChoix = "chiffres";
-        when(serviceJeuxEnfant.saveType("chiffres")).thenReturn(utilisateurDTO);
+        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO(ChoixDeType.APPRENDRE);
+        String typeDeChoix = "apprendre";
+        when(serviceJeuxEnfant.saveType(typeDeChoix)).thenReturn(utilisateurDTO);
 
         // Act-Assert
         mockMvc.perform(MockMvcRequestBuilders.get(PAGE_CHIFFRES_URL, typeDeChoix))
                 .andExpect(status().isOk());
     }
-
     @Test
-    void testCreateEtudiantBadRequest() throws Exception {
-
-        mockMvc.perform(get("/menus"))
-                .andExpect(status().isNotFound());
+    void testMenuParametreBadRequest()throws Exception{
+        String typeDeChoix = "chiffres";
+        mockMvc.perform(MockMvcRequestBuilders.get(PAGE_CHIFFRES_URL, typeDeChoix))
+                .andExpect(status().isBadRequest());
     }
-
     @Test
-    void testCreateEtudiantUrlNotFound() throws Exception {
+    void testMenuUrlNotFound() throws Exception {
 
-        mockMvc.perform(get("/menue"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/menue","dd"))
                 .andExpect(status().isNotFound());
     }
 }
