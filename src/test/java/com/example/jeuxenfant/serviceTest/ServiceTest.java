@@ -5,7 +5,6 @@ import com.example.jeuxenfant.DTOs.ChoixDeType;
 import com.example.jeuxenfant.DTOs.TypePrincipal;
 import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
-import com.fasterxml.jackson.databind.type.TypeParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,16 +24,22 @@ public class ServiceTest {
     String typeChiffres;
     String typeApprendre;
 
+    String typeJeux;
     UtilisateurDTO utilisateurAvecTypeFrancais;
+    UtilisateurDTO utilisateurAvecTypeChiffres;
     UtilisateurDTO utilisateurAvecTypeApprendre;
+
     @BeforeEach
     void setup() {
         typeFransais = "FRANCAIS";
         typeChiffres = "CHIFFRES";
         typeApprendre = "APPRENDRE";
+        typeJeux = "JEUX";
 
         utilisateurAvecTypeFrancais = serviceJeuxEnfant.saveTypePrincipe(typeFransais);
+        utilisateurAvecTypeChiffres = serviceJeuxEnfant.saveTypePrincipe(typeChiffres);
         utilisateurAvecTypeApprendre = serviceJeuxEnfant.saveType(typeApprendre);
+
     }
 
     @Test
@@ -44,6 +49,7 @@ public class ServiceTest {
         // Assert
          assertThat(utilisateurAvecTypeFrancais.getTypePrincipal()).isEqualTo(TypePrincipal.FRANCAIS);
     }
+
     @Test
     void typeDeChoixHappyDayTest() throws Exception {
         // Arrange
@@ -62,6 +68,15 @@ public class ServiceTest {
         assertThat(utilisateurAvecTypeFrancais.getTypePrincipal()).isNotEqualTo("");
         assertThat(utilisateurAvecTypeChiffres).isNotEqualTo(typeFransais);
 
+    }
+    @Test
+    void typeDeChoixBadTest() throws Exception {
+        // Arrange
+        // Act
+        UtilisateurDTO utilisateurAvecTypeJeux = serviceJeuxEnfant.saveType(typeJeux);
+        // Assert
+        assertThat(utilisateurAvecTypeFrancais.getType()).isNotEqualTo("");
+        assertThat(utilisateurAvecTypeApprendre.getType()).isEqualTo(ChoixDeType.APPRENDRE);
     }
 
 }
