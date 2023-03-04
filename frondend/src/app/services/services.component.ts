@@ -47,4 +47,8 @@ export class UtilisateurService {
     }
     return "";
   }
+
+  public getChiffresEnFrancais(): any{
+    return this.http.get<any>(`${this.apiServiceUrl}/apprendreavecletypefrancais`)
+  }
 }

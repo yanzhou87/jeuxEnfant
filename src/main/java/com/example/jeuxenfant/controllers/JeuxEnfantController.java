@@ -19,7 +19,7 @@ public class JeuxEnfantController {
     }
 
     @GetMapping("/menu/{type}")
-    public ResponseEntity<UtilisateurDTO> getLaPageChiffres(@PathVariable String type) {
+    public ResponseEntity<UtilisateurDTO> getLaPageApprendre(@PathVariable String type) {
         try{
             if(type != null && serviceJeuxEnfant.saveType(type) != null){
                 UtilisateurDTO utilisateurDTO = serviceJeuxEnfant.saveType(type);

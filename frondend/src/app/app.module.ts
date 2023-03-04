@@ -8,13 +8,15 @@ import { UtilisateurService } from './services/services.component';
 import { HttpClientModule } from "@angular/common/http";
 import { PagemenuComponent } from './pagemenu/pagemenu.component';
 import { PageApprendrePourTypeChiffresComponent } from './page-apprendre-pour-type-chiffres/page-apprendre-pour-type-chiffres.component';
+import { PageApprendrePourTypeFrancaisComponent } from './page-apprendre-pour-type-francais/page-apprendre-pour-type-francais.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageprincipalComponent,
     PagemenuComponent,
-    PageApprendrePourTypeChiffresComponent
+    PageApprendrePourTypeChiffresComponent,
+    PageApprendrePourTypeFrancaisComponent
   ],
   imports: [
     BrowserModule,

@@ -14,10 +14,8 @@ export class PagemenuComponent {
   typeJeux : TypeDeChoix = TypeDeChoix.JEUX;
   typeDefaut : TypeDeChoix = TypeDeChoix.DEFAUT;
 
-  typeChiffre : boolean = false;
   constructor(private utilisateurService: UtilisateurService) {
     this.type = utilisateurService.getTypePrincipal()
-    this.typeChiffre = this.estTypeChiffre()
   }
 
   setTypeDeChoix(type : TypeDeChoix ){
@@ -31,6 +29,13 @@ export class PagemenuComponent {
 
   estTypeChiffre() : boolean{
     if (this.type == "chiffres"){
+      return true;
+    }
+    return false
+  }
+
+  estTypeFrancais() : boolean{
+    if (this.type == "francais"){
       return true;
     }
     return false
