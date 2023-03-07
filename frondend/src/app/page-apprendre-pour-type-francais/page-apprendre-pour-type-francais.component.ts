@@ -17,10 +17,6 @@ export class PageApprendrePourTypeFrancaisComponent {
   randomColorButtonPrecedent: string = this.getRandomColorButtonPrecedent();
   randomColorButtonProchain: string = this.getRandomColorButtonProchain();
 
-  constructor(private utilisateurService: UtilisateurService) {
-
-  }
-
   getRandomColorBackground(): string {
     let colorsBackground = Object.values(ColorsRandomBackground);
     let randomIndex = Math.floor(Math.random() * colorsBackground.length);

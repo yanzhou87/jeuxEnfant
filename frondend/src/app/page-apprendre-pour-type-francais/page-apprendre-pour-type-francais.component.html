@@ -2,8 +2,14 @@
   <nav>
     <div class="container-fluid">
       <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
-        <h1 class="col-4">Jeux enfant</h1>
-        <a class="m-3 btn btn-danger btn-sm text-light" style="width: 100px" routerLink="/">Retourner</a>
+        <h1 class="col-4">
+          <i class="fa-sharp fa-solid fa-1" [style.color]="randomColorButtonPrecedent"></i>
+          <i class="fa-sharp fa-solid fa-2"></i>
+          <i class="fa-sharp fa-solid fa-3" [style.color]="randomColorButtonProchain"></i>
+          Jeux enfant</h1>
+        <a class="m-3 btn btn-danger btn-sm text-light" style="width: 200px" routerLink="/">
+          <i class="fa-regular fa-house"></i>
+          Retourner</a>
       </div>
       <div class="row">
 
@@ -21,9 +27,15 @@
       </div>
       <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
         <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonPrecedent"
-                style="width: 200px" (click)="setChiffresPrecedent()">Précédent</button>
+                style="width: 200px" (click)="setChiffresPrecedent()">
+          <i class="fa-sharp fa-solid fa-backward-fast"></i>
+          Précédent
+        </button>
         <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonProchain"
-                style="width: 200px" (click)="setChiffresProchain()">Prochain</button>
+                style="width: 200px" (click)="setChiffresProchain()">
+          Prochain
+          <i class="fa-sharp fa-solid fa-forward-fast"></i>
+        </button>
       </div>
     </div>
   </div>
