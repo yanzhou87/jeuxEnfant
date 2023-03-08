@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {ColorsRandomPrecedent} from "../outils/ColorsRandomButtonPrecedent";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
+import {HeaderComponent} from "../header/header.component"
 
 @Component({
   selector: 'app-page-apprendre-pour-type-chiffres',
