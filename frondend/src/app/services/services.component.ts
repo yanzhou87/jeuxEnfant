@@ -4,12 +4,15 @@ import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
 import {TypeDeChoix} from "../outils/typedechoix";
 import {Typeprincipal} from "../outils/typeprincipal";
+import {Observable} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class UtilisateurService {
   private apiServiceUrl = environment.apiBaseUrl;
   private typePrincipal : string = "";
   private typeDeChoix : string = "";
+  private nombreMax : number = 0 ;
+  private nombreMin : number = 0;
 
   constructor(private http: HttpClient, private router: Router) {
 
@@ -48,7 +51,37 @@ export class UtilisateurService {
     return "";
   }
 
-  public getChiffresEnFrancais(): any{
-    return this.http.get<any>(`${this.apiServiceUrl}/apprendreavecletypefrancais`)
+  public setNombreMax():void{
+    this.http.get<number>(`${this.apiServiceUrl}/max`).subscribe(
+      {
+        next:value =>{
+          localStorage.setItem("Max", value.toString());
+          this.nombreMax = value
+        }
+      }
+    )
+  }
+
+  public getNombreMax():number{
+    this.setNombreMax()
+    this.nombreMax = Number(localStorage.getItem("Max"));
+    return this.nombreMax;
+  }
+
+  public setNombreMin():void{
+    this.http.get<number>(`${this.apiServiceUrl}/min`).subscribe(
+      {
+        next:value =>{
+          localStorage.setItem("Min", value.toString());
+          this.nombreMin = value
+        }
+      }
+    )
+  }
+
+  public getNombreMin():number{
+    this.setNombreMin()
+    this.nombreMin = Number(localStorage.getItem("Min"));
+    return this.nombreMin;
   }
 }
