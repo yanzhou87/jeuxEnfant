@@ -22,4 +22,12 @@ public class ServiceJeuxEnfant {
         }
         return null;
     }
+
+    public int getNombreMax(){
+        return new UtilisateurDTO().getNombreMax();
+    }
+
+    public int getNombreMin(){
+        return new UtilisateurDTO().getNombreMin();
+    }
 }

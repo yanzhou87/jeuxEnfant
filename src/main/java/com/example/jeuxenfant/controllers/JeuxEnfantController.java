@@ -49,4 +49,30 @@ public class JeuxEnfantController {
         }
         return new ResponseEntity<>(new UtilisateurDTO(ChoixDeType.DEFAUT), HttpStatus.OK);
     }
+
+    @GetMapping("/max")
+    public ResponseEntity<Integer> getNombreMax() {
+        try{
+            if(serviceJeuxEnfant.getNombreMax() != 0){
+                int nombreMax = this.serviceJeuxEnfant.getNombreMax();
+                return ResponseEntity.ok(nombreMax);
+            }
+        }catch (Exception message){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(100, HttpStatus.OK);
+    }
+
+    @GetMapping("/min")
+    public ResponseEntity<Integer> getNombreMin() {
+        try{
+            if(serviceJeuxEnfant.getNombreMin() < serviceJeuxEnfant.getNombreMax()){
+                int nombreMin = this.serviceJeuxEnfant.getNombreMin();
+                return ResponseEntity.ok(nombreMin);
+            }
+        }catch (Exception message){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(0, HttpStatus.OK);
+    }
 }

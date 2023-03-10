@@ -11,7 +11,6 @@ import {UtilisateurService} from "../services/services.component";
 })
 export class PageApprendrePourTypeChiffresComponent {
 
-
   randomColorBackground: string = this.getRandomColorBackground();
   randomColorButtonPrecedent: string = this.getRandomColorButtonPrecedent();
   randomColorButtonProchain: string = this.getRandomColorButtonProchain();

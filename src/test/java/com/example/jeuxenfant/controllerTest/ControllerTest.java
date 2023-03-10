@@ -22,16 +22,17 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class ControllerTest {
     private static final String PAGE_CHIFFRES_URL = "/menu/{type}";
     private static final String PAGE_PRINCIPAL_URL = "/menu";
+    private static final String PAGE_APPRENDRE_MAX_URL = "/max";
+    private static final String PAGE_APPRENDRE_MIN_URL = "/min";
     MockMvc mockMvc;
 
     @InjectMocks
@@ -99,5 +100,55 @@ public class ControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/menue","dd"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testPageApprendreMaxHappyDay()throws Exception{
+        // Arrange
+        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setNombreMax(200);
+        when(serviceJeuxEnfant.getNombreMax()).thenReturn(utilisateurDTO.getNombreMax());
+
+        // Act-Assert
+        mockMvc.perform(get(PAGE_APPRENDRE_MAX_URL))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testPageApprendreMaxBadRequest()throws Exception{
+        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setNombreMax(0);
+        when(serviceJeuxEnfant.getNombreMax()).thenReturn(utilisateurDTO.getNombreMax());
+
+        // Act-Assert
+        mockMvc.perform(get(PAGE_APPRENDRE_MAX_URL))
+                .andExpect(status().isOk())
+                .andExpect(content().string("100"));
+    }
+    @Test
+    void testPageApprendreMinHappyDay()throws Exception{
+        // Arrange
+        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setNombreMin(1);
+        when(serviceJeuxEnfant.getNombreMin()).thenReturn(utilisateurDTO.getNombreMin());
+
+        // Act-Assert
+        mockMvc.perform(get(PAGE_APPRENDRE_MIN_URL))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testPageApprendreMinBadRequest()throws Exception{
+        // Arrange
+        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setNombreMax(10);
+        utilisateurDTO.setNombreMin(100);
+        when(serviceJeuxEnfant.getNombreMax()).thenReturn(utilisateurDTO.getNombreMax());
+        when(serviceJeuxEnfant.getNombreMin()).thenReturn(utilisateurDTO.getNombreMin());
+
+        // Act-Assert
+        mockMvc.perform(get(PAGE_APPRENDRE_MIN_URL))
+                .andExpect(status().isOk())
+                .andExpect(content().string("0"));
     }
 }

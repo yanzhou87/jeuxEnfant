@@ -79,5 +79,38 @@ public class ServiceTest {
         assertThat(utilisateurAvecTypeApprendre.getType()).isEqualTo(ChoixDeType.APPRENDRE);
     }
 
+    @Test
+    void nombreMaxHappyDayTest() throws Exception {
+        // Arrange
+        // Act
+        int max = serviceJeuxEnfant.getNombreMax();
+        // Assert
+        assertThat(max).isEqualTo(10);
+    }
+
+    @Test
+    void nombreMaxBadTest() throws Exception {
+        // Arrange
+        // Act
+        int max = serviceJeuxEnfant.getNombreMax();
+        // Assert
+        assertThat(max).isNotEqualTo(100);
+    }
+    @Test
+    void nombreMinHappyDayTest() throws Exception {
+        // Arrange
+        // Act
+        int min = serviceJeuxEnfant.getNombreMin();
+        // Assert
+        assertThat(min).isEqualTo(0);
+    }
+    @Test
+    void nombreMinBadTest() throws Exception {
+        // Arrange
+        // Act
+        int min = serviceJeuxEnfant.getNombreMin();
+        // Assert
+        assertThat(min).isNotEqualTo(1);
+    }
 }
 
