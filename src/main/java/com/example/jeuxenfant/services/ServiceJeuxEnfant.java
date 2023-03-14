@@ -1,5 +1,6 @@
 package com.example.jeuxenfant.services;
 
+import com.example.jeuxenfant.DTOs.MonNombreDTO;
 import com.example.jeuxenfant.DTOs.TypePrincipal;
 import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.DTOs.ChoixDeType;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ServiceJeuxEnfant {
+    UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
     public UtilisateurDTO saveType(String type){
         final ChoixDeType choixDeType = ChoixDeType.findChoixDeType(type);
         if (choixDeType != null) {
@@ -23,11 +25,8 @@ public class ServiceJeuxEnfant {
         return null;
     }
 
-    public int getNombreMax(){
-        return new UtilisateurDTO().getNombreMax();
-    }
-
-    public int getNombreMin(){
-        return new UtilisateurDTO().getNombreMin();
+    public MonNombreDTO changeNombre(int max, int min) {
+        this.utilisateurDTO.setNombre(new MonNombreDTO(max, min));
+        return utilisateurDTO.getNombre();
     }
 }

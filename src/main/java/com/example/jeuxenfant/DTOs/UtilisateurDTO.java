@@ -12,13 +12,16 @@ public class UtilisateurDTO {
     private ChoixDeType type;
     private TypePrincipal typePrincipal;
 
-    private int nombreMax = 10;
-    private int nombreMin = 0;
+    private MonNombreDTO nombre;
     public UtilisateurDTO(ChoixDeType type) {
         this.type = type;
     }
 
     public UtilisateurDTO(TypePrincipal typePrincipal) {
         this.typePrincipal = typePrincipal;
+    }
+
+    public UtilisateurDTO(MonNombreDTO monNombreDTO) {
+        this.nombre = monNombreDTO;
     }
 }

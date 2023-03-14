@@ -2,6 +2,7 @@ package com.example.jeuxenfant.controllerTest;
 
 
 import com.example.jeuxenfant.DTOs.ChoixDeType;
+import com.example.jeuxenfant.DTOs.MonNombreDTO;
 import com.example.jeuxenfant.DTOs.TypePrincipal;
 import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.controllers.JeuxEnfantController;
@@ -31,8 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ControllerTest {
     private static final String PAGE_CHIFFRES_URL = "/menu/{type}";
     private static final String PAGE_PRINCIPAL_URL = "/menu";
-    private static final String PAGE_APPRENDRE_MAX_URL = "/max";
-    private static final String PAGE_APPRENDRE_MIN_URL = "/min";
+    private static final String NOMBRE_URL = "/nombre";
     MockMvc mockMvc;
 
     @InjectMocks
@@ -103,52 +103,37 @@ public class ControllerTest {
     }
 
     @Test
-    void testPageApprendreMaxHappyDay()throws Exception{
+    void testMonNombreHappyDay()throws Exception{
         // Arrange
         final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
-        utilisateurDTO.setNombreMax(200);
-        when(serviceJeuxEnfant.getNombreMax()).thenReturn(utilisateurDTO.getNombreMax());
+        final MonNombreDTO monNombreDTO = new MonNombreDTO();
+        ObjectMapper objectMapper = new ObjectMapper();
+        monNombreDTO.setMax(10);
+        monNombreDTO.setMin(0);
+        utilisateurDTO.setNombre(monNombreDTO);
 
+        when(serviceJeuxEnfant.changeNombre(10,0)).thenReturn(utilisateurDTO.getNombre());
         // Act-Assert
-        mockMvc.perform(get(PAGE_APPRENDRE_MAX_URL))
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put(NOMBRE_URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(monNombreDTO)))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void testPageApprendreMaxBadRequest()throws Exception{
-        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
-        utilisateurDTO.setNombreMax(0);
-        when(serviceJeuxEnfant.getNombreMax()).thenReturn(utilisateurDTO.getNombreMax());
-
-        // Act-Assert
-        mockMvc.perform(get(PAGE_APPRENDRE_MAX_URL))
-                .andExpect(status().isOk())
-                .andExpect(content().string("100"));
-    }
-    @Test
-    void testPageApprendreMinHappyDay()throws Exception{
+    void testMonNombreBadRequest()throws Exception{
         // Arrange
-        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
-        utilisateurDTO.setNombreMin(1);
-        when(serviceJeuxEnfant.getNombreMin()).thenReturn(utilisateurDTO.getNombreMin());
+        final MonNombreDTO monNombreDTO = new MonNombreDTO();
+        ObjectMapper objectMapper = new ObjectMapper();
+        monNombreDTO.setMax(0);
+        monNombreDTO.setMin(9);
 
         // Act-Assert
-        mockMvc.perform(get(PAGE_APPRENDRE_MIN_URL))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void testPageApprendreMinBadRequest()throws Exception{
-        // Arrange
-        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
-        utilisateurDTO.setNombreMax(10);
-        utilisateurDTO.setNombreMin(100);
-        when(serviceJeuxEnfant.getNombreMax()).thenReturn(utilisateurDTO.getNombreMax());
-        when(serviceJeuxEnfant.getNombreMin()).thenReturn(utilisateurDTO.getNombreMin());
-
-        // Act-Assert
-        mockMvc.perform(get(PAGE_APPRENDRE_MIN_URL))
-                .andExpect(status().isOk())
-                .andExpect(content().string("0"));
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put(NOMBRE_URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(monNombreDTO)))
+                .andExpect(status().isBadRequest());
     }
 }

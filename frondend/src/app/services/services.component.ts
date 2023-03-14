@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {TypeDeChoix} from "../outils/typedechoix";
 import {Typeprincipal} from "../outils/typeprincipal";
 import {Observable} from "rxjs";
+import {Nombres} from "../outils/Nombres";
 
 @Injectable({providedIn: 'root'})
 export class UtilisateurService {
@@ -51,8 +52,10 @@ export class UtilisateurService {
     return "";
   }
 
-  public setNombreMax():void{
-    this.http.get<number>(`${this.apiServiceUrl}/max`).subscribe(
+  public setNombreMax(nombreMax : number):void{
+    this.http.put<number>(`${this.apiServiceUrl}/max`, {
+      max : nombreMax
+    }).subscribe(
       {
         next:value =>{
           localStorage.setItem("Max", value.toString());
@@ -63,13 +66,14 @@ export class UtilisateurService {
   }
 
   public getNombreMax():number{
-    this.setNombreMax()
     this.nombreMax = Number(localStorage.getItem("Max"));
     return this.nombreMax;
   }
 
-  public setNombreMin():void{
-    this.http.get<number>(`${this.apiServiceUrl}/min`).subscribe(
+  public setNombreMin(nombreMin : number):void{
+    this.http.put<number>(`${this.apiServiceUrl}/min`, {
+      min : nombreMin
+    }).subscribe(
       {
         next:value =>{
           localStorage.setItem("Min", value.toString());
@@ -80,8 +84,16 @@ export class UtilisateurService {
   }
 
   public getNombreMin():number{
-    this.setNombreMin()
     this.nombreMin = Number(localStorage.getItem("Min"));
     return this.nombreMin;
+  }
+
+  public changeNombre(nombreMax : number, nombreMin : number):Observable<Nombres>{
+    localStorage.setItem("Min", nombreMin.toString());
+    localStorage.setItem("Max", nombreMax.toString());
+   return  this.http.put<Nombres>(`${this.apiServiceUrl}/nombre`, {
+      max : nombreMax,
+      min : nombreMin
+    })
   }
 }

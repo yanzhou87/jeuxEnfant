@@ -19,8 +19,9 @@ public class Utilisateur{
 
     private ChoixDeType type;
     private TypePrincipal typePrincipal;
-    private int nombreMax = 10;
-    private int nombreMin = 0;
+    @OneToOne
+    @JoinColumn(name = "nombre_id")
+    private MonNombre nombre;
     private int reponse;
 
 }

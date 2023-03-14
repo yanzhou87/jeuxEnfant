@@ -2,6 +2,7 @@ package com.example.jeuxenfant.serviceTest;
 
 
 import com.example.jeuxenfant.DTOs.ChoixDeType;
+import com.example.jeuxenfant.DTOs.MonNombreDTO;
 import com.example.jeuxenfant.DTOs.TypePrincipal;
 import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
@@ -80,37 +81,27 @@ public class ServiceTest {
     }
 
     @Test
-    void nombreMaxHappyDayTest() throws Exception {
+    void changeNombreHappyDayTest() throws Exception {
         // Arrange
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
         // Act
-        int max = serviceJeuxEnfant.getNombreMax();
+        MonNombreDTO monNombreDTO = serviceJeuxEnfant.changeNombre(30,10);
+        utilisateurDTO.setNombre(monNombreDTO);
         // Assert
-        assertThat(max).isEqualTo(10);
+        assertThat(utilisateurDTO.getNombre().getMax()).isEqualTo(30);
+        assertThat(utilisateurDTO.getNombre().getMin()).isEqualTo(10);
     }
 
     @Test
-    void nombreMaxBadTest() throws Exception {
+    void changeNombreBadTest() throws Exception {
         // Arrange
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
         // Act
-        int max = serviceJeuxEnfant.getNombreMax();
+        MonNombreDTO monNombreDTO = serviceJeuxEnfant.changeNombre(30,10);
+        utilisateurDTO.setNombre(monNombreDTO);
         // Assert
-        assertThat(max).isNotEqualTo(100);
-    }
-    @Test
-    void nombreMinHappyDayTest() throws Exception {
-        // Arrange
-        // Act
-        int min = serviceJeuxEnfant.getNombreMin();
-        // Assert
-        assertThat(min).isEqualTo(0);
-    }
-    @Test
-    void nombreMinBadTest() throws Exception {
-        // Arrange
-        // Act
-        int min = serviceJeuxEnfant.getNombreMin();
-        // Assert
-        assertThat(min).isNotEqualTo(1);
+        assertThat(utilisateurDTO.getNombre().getMax()).isNotEqualTo(10);
+        assertThat(utilisateurDTO.getNombre().getMin()).isNotEqualTo(30);
     }
 }
 

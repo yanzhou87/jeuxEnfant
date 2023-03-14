@@ -1,5 +1,7 @@
 package com.example.jeuxenfant.controllers;
 
+import com.example.jeuxenfant.DTOs.MonNombreDTO;
+import com.example.jeuxenfant.models.MonNombre;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,29 +52,16 @@ public class JeuxEnfantController {
         return new ResponseEntity<>(new UtilisateurDTO(ChoixDeType.DEFAUT), HttpStatus.OK);
     }
 
-    @GetMapping("/max")
-    public ResponseEntity<Integer> getNombreMax() {
+    @PutMapping("/nombre")
+    public ResponseEntity<MonNombreDTO> getNombreMax(@RequestBody MonNombre nombre) {
         try{
-            if(serviceJeuxEnfant.getNombreMax() != 0){
-                int nombreMax = this.serviceJeuxEnfant.getNombreMax();
-                return ResponseEntity.ok(nombreMax);
-            }
+           if (nombre.getMin() < nombre.getMax()){
+               MonNombreDTO monNombre = serviceJeuxEnfant.changeNombre(nombre.getMax(), nombre.getMin());
+               return new ResponseEntity<>(monNombre, HttpStatus.OK);
+           }
         }catch (Exception message){
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(100, HttpStatus.OK);
-    }
-
-    @GetMapping("/min")
-    public ResponseEntity<Integer> getNombreMin() {
-        try{
-            if(serviceJeuxEnfant.getNombreMin() < serviceJeuxEnfant.getNombreMax()){
-                int nombreMin = this.serviceJeuxEnfant.getNombreMin();
-                return ResponseEntity.ok(nombreMin);
-            }
-        }catch (Exception message){
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(0, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
