@@ -3,7 +3,7 @@
   <div class="btn-group-vertical position-absolute top-50 start-50 translate-middle">
     <div class="container-fluid">
       <div class="row">
-        <div class="card" style="width: 38rem; height: 15rem;">
+        <div class="card">
           <div class="card-body">
             <p class="card-text text-center display-1 m-5">{{ chiffers }}</p>
           </div>
@@ -11,10 +11,10 @@
       </div>
       <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
         <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonPrecedent"
-                style="width: 200px" (click)="setChiffresPrecedent()"> <i class="fa-sharp fa-solid fa-backward-fast"></i>
+                (click)="setChiffresPrecedent()"> <i class="fa-sharp fa-solid fa-backward-fast"></i>
             Précédent</button>
         <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonProchain"
-                style="width: 200px" (click)="setChiffresProchain()">Prochain
+                (click)="setChiffresProchain()">Prochain
           <i class="fa-sharp fa-solid fa-forward-fast"></i>
         </button>
       </div>

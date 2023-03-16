@@ -10,7 +10,7 @@
         <i class="fas fa-house"></i>
         Retourner</a>
     </div>
-    <div class="row  float-end">
+    <div class="row  float-end" *ngIf="typePrincipe == 'chiffres'">
       <!-- Button trigger modal -->
       <button type="button" class="col-12 m-3 btn btn-info btn-sm text-light" style="width: 200px"
               data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -42,7 +42,7 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
               <button type="button" class="btn" [style.background-color]="randomColorButtonProchain"
-                      (click)="saveChanges()" [attr.data-bs-dismiss]="!erreurMax ? null : 'modal'">Enregistrer</button>
+                      (click)="saveChanges()" [attr.data-bs-dismiss]="erreurMax ? null : 'modal'">Enregistrer</button>
             </div>
           </div>
         </div>

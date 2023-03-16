@@ -3,6 +3,7 @@ import {ColorsRandomPrecedent} from "../outils/ColorsRandomButtonPrecedent";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 import {UtilisateurService} from "../services/services.component";
 import {Router} from "@angular/router";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,9 +17,11 @@ export class HeaderComponent {
   nombreMin : number = 0;
   nombreMax : number = 0;
 
+  typePrincipe: string = ""
   erreurMax : boolean = false;
 
   constructor(private utilisateurService: UtilisateurService, private router: Router) {
+    this.typePrincipe = this.utilisateurService.getTypePrincipal();
   }
   getRandomColorButtonPrecedent(): string {
     let colorsPrecedent = Object.values(ColorsRandomPrecedent);
@@ -33,9 +36,11 @@ export class HeaderComponent {
   }
 
   saveChanges() {
+    console.log(this.erreurMax)
     this.router.navigateByUrl('/apprendreavecletypechiffres');
     if(this.nombreMax < this.nombreMin) {
       this.erreurMax = true;
+      console.log(this.erreurMax)
     }else {
       this.utilisateurService.changeNombre(this.nombreMax,this.nombreMin).subscribe({
           next: value => {
