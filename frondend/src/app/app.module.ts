@@ -11,7 +11,6 @@ import { PageApprendrePourTypeChiffresComponent } from './page-apprendre-pour-ty
 import { PageApprendrePourTypeFrancaisComponent } from './page-apprendre-pour-type-francais/page-apprendre-pour-type-francais.component';
 import { HeaderComponent } from './header/header.component';
 import {FormsModule} from "@angular/forms";
-import { MyModalComponent } from './my-modal/my-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { MyModalComponent } from './my-modal/my-modal.component';
     PagemenuComponent,
     PageApprendrePourTypeChiffresComponent,
     PageApprendrePourTypeFrancaisComponent,
-    HeaderComponent,
-    MyModalComponent
+    HeaderComponent
   ],
     imports: [
         BrowserModule,

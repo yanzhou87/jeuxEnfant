@@ -3,6 +3,7 @@ import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {ColorsRandomPrecedent} from "../outils/ColorsRandomButtonPrecedent";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 import {UtilisateurService} from "../services/services.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-page-apprendre-pour-type-chiffres',
@@ -17,8 +18,9 @@ export class PageApprendrePourTypeChiffresComponent {
   nombreMax: number;
   nombreMin: number;
   chiffers: number = 0;
+  erreurMax : boolean = false;
 
-  constructor(private utilisateurService: UtilisateurService) {
+  constructor(private utilisateurService: UtilisateurService, private router: Router) {
        this.nombreMax = utilisateurService.getNombreMax();
        this.nombreMin = utilisateurService.getNombreMin();
        this.chiffers = this.nombreMin
@@ -52,6 +54,21 @@ export class PageApprendrePourTypeChiffresComponent {
     if(this.chiffers != this.nombreMax){
       this.chiffers += 1;
       this.randomColorBackground = this.getRandomColorBackground();
+    }
+  }
+
+  saveChanges() {
+    if(this.nombreMax < this.nombreMin) {
+      this.erreurMax = true;
+    }else {
+      this.utilisateurService.changeNombre(this.nombreMax,this.nombreMin).subscribe({
+          next: value => {
+            this.nombreMax = value.max
+            this.nombreMin = value.min
+            this.chiffers = value.min
+          }
+        }
+      );
     }
   }
 }
