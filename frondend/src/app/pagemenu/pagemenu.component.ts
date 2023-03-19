@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {UtilisateurService} from "../services/services.component";
-import {TypeDeChoix} from "../outils/typedechoix";
+import {ChoixDeType} from "../outils/choixDeType";
 
 @Component({
   selector: 'app-pagemenu',
@@ -10,15 +10,15 @@ import {TypeDeChoix} from "../outils/typedechoix";
 export class PagemenuComponent {
 
   type : string = "";
-  typeApprendre : TypeDeChoix = TypeDeChoix.APPRENDRE;
-  typeJeux : TypeDeChoix = TypeDeChoix.JEUX;
-  typeDefaut : TypeDeChoix = TypeDeChoix.DEFAUT;
+  typeApprendre : ChoixDeType = ChoixDeType.APPRENDRE;
+  typeJeux : ChoixDeType = ChoixDeType.JEUX;
+  typeDefaut : ChoixDeType = ChoixDeType.DEFAUT;
 
   constructor(private utilisateurService: UtilisateurService) {
     this.type = utilisateurService.getTypePrincipal()
   }
 
-  setTypeDeChoix(type : TypeDeChoix ){
+  setTypeDeChoix(type : ChoixDeType ){
     this.utilisateurService.setTypeDeChoix(type);
     this.getType()
   }

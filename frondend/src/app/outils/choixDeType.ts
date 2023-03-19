@@ -1,3 +1,3 @@
-export enum TypeDeChoix {
+export enum ChoixDeType {
   APPRENDRE=("apprendre"),JEUX=("jeux"), DEFAUT=("defaut")
 }

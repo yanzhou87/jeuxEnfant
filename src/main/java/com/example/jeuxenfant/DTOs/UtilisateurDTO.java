@@ -13,6 +13,8 @@ public class UtilisateurDTO {
     private TypePrincipal typePrincipal;
 
     private MonNombreDTO nombre;
+
+    private int repondre;
     public UtilisateurDTO(ChoixDeType type) {
         this.type = type;
     }

@@ -64,4 +64,14 @@ public class JeuxEnfantController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/repondre")
+    public ResponseEntity<UtilisateurDTO> getRepondre() {
+        try{
+            UtilisateurDTO utilisateurDTO = serviceJeuxEnfant.getRepondre();
+            return new ResponseEntity<>(utilisateurDTO, HttpStatus.OK);
+        }catch (Exception message){
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

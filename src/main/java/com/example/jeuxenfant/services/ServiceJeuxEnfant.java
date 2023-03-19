@@ -6,6 +6,8 @@ import com.example.jeuxenfant.DTOs.UtilisateurDTO;
 import com.example.jeuxenfant.DTOs.ChoixDeType;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class ServiceJeuxEnfant {
     UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
@@ -28,5 +30,11 @@ public class ServiceJeuxEnfant {
     public MonNombreDTO changeNombre(int max, int min) {
         this.utilisateurDTO.setNombre(new MonNombreDTO(max, min));
         return utilisateurDTO.getNombre();
+    }
+
+    public UtilisateurDTO getRepondre() {
+        Random random = new Random();
+        utilisateurDTO.setRepondre(random.nextInt(3) + 1);
+        return utilisateurDTO;
     }
 }

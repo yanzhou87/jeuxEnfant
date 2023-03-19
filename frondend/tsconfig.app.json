@@ -7,7 +7,7 @@
   },
   "files": [
     "src/main.ts",
-    "src/app/outils/typedechoix.ts"
+    "src/app/outils/choixDeType.ts"
   ],
   "include": [
     "src/**/*.d.ts"

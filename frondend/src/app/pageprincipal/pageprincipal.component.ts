@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {UtilisateurService} from "../services/services.component";
-import {Typeprincipal} from "../outils/typeprincipal";
+import {TypePrincipal} from "../outils/typePrincipal";
 
 @Component({
   selector: 'app-pageprincipal',
@@ -9,14 +9,14 @@ import {Typeprincipal} from "../outils/typeprincipal";
 })
 export class PageprincipalComponent {
 
-  typeFrancais : Typeprincipal = Typeprincipal.FRANCAIS;
-  typeChiffres : Typeprincipal = Typeprincipal.CHIFFRES;
+  typeFrancais : TypePrincipal = TypePrincipal.FRANCAIS;
+  typeChiffres : TypePrincipal = TypePrincipal.CHIFFRES;
 
   constructor(private utilisateurService: UtilisateurService) {
 
   }
 
-  setTypePrincipal(type : Typeprincipal){
+  setTypePrincipal(type : TypePrincipal){
     this.utilisateurService.setTypePrincipal(type);
   }
 }

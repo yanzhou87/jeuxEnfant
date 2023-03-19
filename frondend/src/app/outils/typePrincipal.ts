@@ -1,3 +1,3 @@
-export enum Typeprincipal {
+export enum TypePrincipal {
   CHIFFRES=("chiffres"),FRANCAIS=("francais")
 }

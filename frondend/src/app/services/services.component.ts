@@ -2,10 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
-import {TypeDeChoix} from "../outils/typedechoix";
-import {Typeprincipal} from "../outils/typeprincipal";
+import {ChoixDeType} from "../outils/choixDeType";
+import {TypePrincipal} from "../outils/typePrincipal";
 import {Observable} from "rxjs";
-import {Nombres} from "../outils/Nombres";
+import {MonNombre} from "../outils/MonNombre";
+import {Utilisateur} from "../outils/Utilisateur";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({providedIn: 'root'})
 export class UtilisateurService {
@@ -14,12 +16,12 @@ export class UtilisateurService {
   private typeDeChoix : string = "";
   private nombreMax : number = 0 ;
   private nombreMin : number = 0;
-
+  private repondre : number = 0;
   constructor(private http: HttpClient, private router: Router) {
 
   }
 
-  public setTypePrincipal(type : Typeprincipal):void{
+  public setTypePrincipal(type : TypePrincipal):void{
     if(type){
       localStorage.setItem("TypePrincipal", type.toString());
     }
@@ -29,7 +31,7 @@ export class UtilisateurService {
     });
   }
 
-  public setTypeDeChoix(type : TypeDeChoix):void{
+  public setTypeDeChoix(type : ChoixDeType):void{
     if(type){
       localStorage.setItem("TypeDeChoix", type.toString());
     }
@@ -52,35 +54,9 @@ export class UtilisateurService {
     return "";
   }
 
-  public setNombreMax(nombreMax : number):void{
-    this.http.put<number>(`${this.apiServiceUrl}/max`, {
-      max : nombreMax
-    }).subscribe(
-      {
-        next:value =>{
-          localStorage.setItem("Max", value.toString());
-          this.nombreMax = value
-        }
-      }
-    )
-  }
-
   public getNombreMax():number{
     this.nombreMax = Number(localStorage.getItem("Max"));
     return this.nombreMax;
-  }
-
-  public setNombreMin(nombreMin : number):void{
-    this.http.put<number>(`${this.apiServiceUrl}/min`, {
-      min : nombreMin
-    }).subscribe(
-      {
-        next:value =>{
-          localStorage.setItem("Min", value.toString());
-          this.nombreMin = value
-        }
-      }
-    )
   }
 
   public getNombreMin():number{
@@ -88,12 +64,30 @@ export class UtilisateurService {
     return this.nombreMin;
   }
 
-  public changeNombre(nombreMax : number, nombreMin : number):Observable<Nombres>{
+  public changeNombre(nombreMax : number, nombreMin : number):Observable<MonNombre>{
     localStorage.setItem("Min", nombreMin.toString());
     localStorage.setItem("Max", nombreMax.toString());
-   return  this.http.put<Nombres>(`${this.apiServiceUrl}/nombre`, {
+   return  this.http.put<MonNombre>(`${this.apiServiceUrl}/nombre`, {
       max : nombreMax,
       min : nombreMin
     })
+  }
+
+  public getBonRepondre():void{
+    this.http.get<Utilisateur>(`${this.apiServiceUrl}/repondre`).subscribe(
+      {
+        next: value => {
+          localStorage.setItem("repondre", value.repondre.toString());
+          this.repondre = Number(localStorage.getItem("repondre"));
+        },
+        error: err => {
+          console.log("err : " + err)
+        }
+      }
+    )
+  }
+
+  public getBonResultat():number{
+    return this.repondre;
   }
 }

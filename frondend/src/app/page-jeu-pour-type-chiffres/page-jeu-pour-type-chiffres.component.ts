@@ -16,11 +16,14 @@ export class PageJeuPourTypeChiffresComponent {
   max : number = 0;
   min : number = 0;
 
+  bonRepondre : number = 0;
   nbRandomPourCard1: number = 0;
   nbRandomPourCard2: number = 0;
   nbRandomPourCard3: number = 0;
 
-  constructor(private utilisateurService: UtilisateurService, private router: Router) {
+  constructor(private utilisateurService: UtilisateurService) {
+    utilisateurService.getBonRepondre();
+    this.bonRepondre = utilisateurService.getBonResultat()
     this.min = utilisateurService.getNombreMin();
     this.max = utilisateurService.getNombreMax();
     this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
@@ -34,20 +37,21 @@ export class PageJeuPourTypeChiffresComponent {
   }
 
   choisirLesRepondses(){
-    this.nbRandomPourCard1 = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-    if (this.nbRandomPourCard1 == this.numbreRandom){
+    console.log(this.bonRepondre)
+    if (this.bonRepondre == 1){
+      this.nbRandomPourCard1 = this.numbreRandom
       this.nbRandomPourCard2 = this.nbFaux()
       this.nbRandomPourCard3 = this.nbFaux()
-    } else {
-      this.nbRandomPourCard2 = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-      if (this.nbRandomPourCard2 == this.numbreRandom){
-        this.nbRandomPourCard1 = this.nbFaux()
-        this.nbRandomPourCard3 = this.nbFaux()
-      } else {
-        this.nbRandomPourCard3 = this.numbreRandom;
-        this.nbRandomPourCard1 = this.nbFaux();
-        this.nbRandomPourCard2 = this.nbFaux();
-      }
+    }
+    if (this.bonRepondre == 2){
+      this.nbRandomPourCard1 = this.nbFaux()
+      this.nbRandomPourCard2 = this.numbreRandom
+      this.nbRandomPourCard3 = this.nbFaux()
+    }
+    if (this.bonRepondre == 3){
+      this.nbRandomPourCard1 = this.nbFaux()
+      this.nbRandomPourCard2 = this.nbFaux()
+      this.nbRandomPourCard3 = this.numbreRandom
     }
   }
   nbFaux() : number{
