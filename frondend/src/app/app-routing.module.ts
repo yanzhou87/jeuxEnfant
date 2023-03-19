@@ -8,12 +8,14 @@ import {
 import {
   PageApprendrePourTypeFrancaisComponent
 } from "./page-apprendre-pour-type-francais/page-apprendre-pour-type-francais.component";
+import {PageJeuPourTypeChiffresComponent} from "./page-jeu-pour-type-chiffres/page-jeu-pour-type-chiffres.component";
 
 const routes: Routes = [
   { path: '', component: PageprincipalComponent, pathMatch:'full'},
   { path: 'menu', component: PagemenuComponent},
   { path: 'apprendreavecletypechiffres', component: PageApprendrePourTypeChiffresComponent},
   { path: 'apprendreavecletypefrancais', component: PageApprendrePourTypeFrancaisComponent},
+  { path: 'jeuavecletypefrancais', component: PageJeuPourTypeChiffresComponent},
 
 ];
 

@@ -13,7 +13,8 @@
         <a class="m-3 btn btn-info text-light" *ngIf="estTypeFrancais()" routerLink="/apprendreavecletypefrancais" (click)="setTypeDeChoix(typeApprendre)">Apprendre</a>
       </div>
       <div class="row">
-        <a class="m-3 btn btn-primary text-light" routerLink="/jeux" (click)="setTypeDeChoix(typeJeux)">Jeux</a>
+        <a class="m-3 btn btn-primary text-light" *ngIf="estTypeChiffre()" routerLink="/jeuavecletypefrancais" (click)="setTypeDeChoix(typeJeux)">Jeux</a>
+        <a class="m-3 btn btn-info text-light" *ngIf="estTypeFrancais()" routerLink="/" (click)="setTypeDeChoix(typeJeux)">Jeux</a>
       </div>
       <div class="row">
         <a class="m-3 btn btn-danger text-light" routerLink="/" (click)="setTypeDeChoix(typeDefaut)">Retourner</a>
