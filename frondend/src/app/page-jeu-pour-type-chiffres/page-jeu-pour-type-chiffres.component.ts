@@ -53,4 +53,8 @@ export class PageJeuPourTypeChiffresComponent {
   nbFaux() : number{
     return Math.floor(Math.random() * (this.max + 10 - this.max + 1) + this.max);
   }
+
+  range(start: number, end: number): number[] {
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }
 }

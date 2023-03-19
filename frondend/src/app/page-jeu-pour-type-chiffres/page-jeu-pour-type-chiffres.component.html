@@ -13,22 +13,34 @@
     <div class="col-7 m-1">
       <div class="row">
         <div class="card">
-          <div class="card-body" *ngFor="nbRandomPourCard1">
-
+          <div class="card-body" >
+            <div class="row">
+              <div class="col-1"  *ngFor="let i of range(0, nbRandomPourCard1-1)">
+                <p class="bg-info">{{nbRandomPourCard1}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="card">
-          <div class="card-body" *ngFor="nbRandomPourCard2">
-
+          <div class="card-body">
+            <div class="row">
+              <div class="col-1"  *ngFor="let i of range(0, nbRandomPourCard2-1)">
+                <p class="bg-warning">{{nbRandomPourCard2}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="card">
-          <div class="card-body" *ngFor="nbRandomPourCard3">
-
+          <div class="card-body">
+            <div class="row">
+              <div class="col-1"  *ngFor="let i of range(0, nbRandomPourCard3-1)">
+                <p class="bg-danger">{{nbRandomPourCard3}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
