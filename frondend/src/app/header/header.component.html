@@ -11,42 +11,7 @@
         Retourner</a>
     </div>
     <div class="row  float-end" *ngIf="typePrincipe == 'chiffres'">
-      <!-- Button trigger modal -->
-      <button type="button" class="col-12 m-3 btn btn-info btn-sm text-light" style="width: 200px"
-              data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Paramétrer
-      </button>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Choisir le nombre min et le nombre max</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" [style.background-color]="randomColorButtonProchain">
-              <form class="was-validated">
-                <div class="custom-control mb-3">
-                  <label class="custom-control-label m-2">Entrez le nombre min : </label><br>
-                  <input class="custom-control-input" required type="number" name="nombreMin" [(ngModel)]="nombreMin"><br>
-                  <div class="text-danger" >* Le nombre par défaut est 0</div>
-                </div>
-                <div class="was-validated mb-3">
-                  <label class="custom-control-label m-2">Entrez le nombre max : </label><br>
-                  <input class="custom-control-input" required type="number" name="nombreMax" [(ngModel)]="nombreMax"><br><br>
-                  <div class="text-danger" *ngIf="erreurMax">Le nombre max invalide, doit être supérieur au nombre min</div>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-              <button type="button" class="btn" [style.background-color]="randomColorButtonProchain"
-                      (click)="saveChanges()" [attr.data-bs-dismiss]="erreurMax ? null : 'modal'">Enregistrer</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-my-modal></app-my-modal>
     </div>
   </div>
 </nav>
