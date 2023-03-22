@@ -103,5 +103,38 @@ public class ServiceTest {
         assertThat(utilisateurDTO.getNombre().getMax()).isNotEqualTo(10);
         assertThat(utilisateurDTO.getNombre().getMin()).isNotEqualTo(30);
     }
+
+
+    @Test
+    void getRepondreHappyDayTest() throws Exception {
+        // Arrange
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        // Act
+        utilisateurDTO = serviceJeuxEnfant.getRepondre();
+
+        // Assert
+        if(utilisateurDTO.getRepondre() == 1){
+            assertThat(utilisateurDTO.getRepondre()).isEqualTo(1);
+        }
+        if(utilisateurDTO.getRepondre() == 2){
+            assertThat(utilisateurDTO.getRepondre()).isEqualTo(2);
+        }
+        if(utilisateurDTO.getRepondre() == 3){
+            assertThat(utilisateurDTO.getRepondre()).isEqualTo(3);
+        }
+    }
+
+    @Test
+    void getRepondreBadTest() throws Exception {
+        // Arrange
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        // Act
+        utilisateurDTO = serviceJeuxEnfant.getRepondre();
+
+        // Assert
+        assertThat(utilisateurDTO.getRepondre()).isNotEqualTo(4);
+
+
+    }
 }
 

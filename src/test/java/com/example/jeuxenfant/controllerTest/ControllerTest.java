@@ -33,6 +33,7 @@ public class ControllerTest {
     private static final String PAGE_CHIFFRES_URL = "/menu/{type}";
     private static final String PAGE_PRINCIPAL_URL = "/menu";
     private static final String NOMBRE_URL = "/nombre";
+    private static final String REPONDRE_URL = "/repondre";
     MockMvc mockMvc;
 
     @InjectMocks
@@ -135,5 +136,22 @@ public class ControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(monNombreDTO)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testRepondreHappyDay()throws Exception{
+        // Arrange
+        final UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setRepondre(2);
+        when(serviceJeuxEnfant.getRepondre()).thenReturn(utilisateurDTO);
+        // Act-Assert
+        mockMvc.perform(MockMvcRequestBuilders.get(REPONDRE_URL))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testRepondreUrlNotFound()throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/reponddre"))
+                .andExpect(status().isNotFound());
     }
 }

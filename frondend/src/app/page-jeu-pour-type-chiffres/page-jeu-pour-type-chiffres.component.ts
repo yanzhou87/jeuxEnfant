@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {UtilisateurService} from "../services/services.component";
 import {Router} from "@angular/router";
+import {IconsListe} from "../outils/iconsListe";
+import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 
 @Component({
   selector: 'app-page-jeu-pour-type-chiffres',
@@ -11,6 +13,7 @@ import {Router} from "@angular/router";
 export class PageJeuPourTypeChiffresComponent {
 
   randomColorBackground: string = this.getRandomColorBackground();
+  randomColorButtonProchain: string = this.getRandomColorButtonProchain();
 
   numbreRandom : number = 0;
   max : number = 0;
@@ -21,6 +24,10 @@ export class PageJeuPourTypeChiffresComponent {
   nbRandomPourCard2: number = 0;
   nbRandomPourCard3: number = 0;
 
+  myicon : string = this.getIcon()
+
+  reussi : boolean = false;
+
   constructor(private utilisateurService: UtilisateurService) {
     utilisateurService.getBonRepondre();
     this.bonRepondre = utilisateurService.getBonResultat()
@@ -28,6 +35,7 @@ export class PageJeuPourTypeChiffresComponent {
     this.max = utilisateurService.getNombreMax();
     this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
     this.choisirLesRepondses()
+    console.log(this.myicon)
   }
 
   getRandomColorBackground(): string {
@@ -37,7 +45,7 @@ export class PageJeuPourTypeChiffresComponent {
   }
 
   choisirLesRepondses(){
-    console.log(this.bonRepondre)
+    console.log("choisirLesRepondses"+this.bonRepondre)
     if (this.bonRepondre == 1){
       this.nbRandomPourCard1 = this.numbreRandom
       this.nbRandomPourCard2 = this.nbFaux()
@@ -55,10 +63,42 @@ export class PageJeuPourTypeChiffresComponent {
     }
   }
   nbFaux() : number{
-    return Math.floor(Math.random() * (this.max + 10 - this.max + 1) + this.max);
+    let randomNumber;
+    do {
+      randomNumber = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+      console.log("randomNumber : "+randomNumber)
+    } while (randomNumber == this.numbreRandom);
+    return randomNumber;
   }
 
   range(start: number, end: number): number[] {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }
+
+  getIcon(): string {
+    let monIcon = Object.values(IconsListe);
+    let randomIndex = Math.floor(Math.random() * monIcon.length);
+    return monIcon[randomIndex].valueOf().toString();
+  }
+
+  getRandomColorButtonProchain(): string {
+    let colorsProchain = Object.values(ColorsRandomProchain);
+    let randomIndex = Math.floor(Math.random() * colorsProchain.length);
+    return colorsProchain[randomIndex].valueOf().toString();
+  }
+
+  getRepondre(choix : number): void {
+     if(this.bonRepondre == choix){
+       this.reussi = true;
+       this.bonRepondre = this.utilisateurService.getBonResultat()
+       this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+       this.myicon = this.getIcon()
+       this.randomColorBackground = this.getRandomColorBackground();
+       this.randomColorButtonProchain = this.getRandomColorButtonProchain();
+       this.choisirLesRepondses()
+     } else {
+       this.reussi = false;
+     }
+     console.log(this.reussi)
   }
 }

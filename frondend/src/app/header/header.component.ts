@@ -4,6 +4,7 @@ import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 import {UtilisateurService} from "../services/services.component";
 import {NavigationEnd, Router} from "@angular/router";
 import {filter} from "rxjs";
+import {IconsListe} from "../outils/iconsListe";
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,6 @@ export class HeaderComponent {
 
   randomColorButtonPrecedent: string = this.getRandomColorButtonPrecedent();
   randomColorButtonProchain: string = this.getRandomColorButtonProchain();
-
   typePrincipe: string = ""
 
   constructor(private utilisateurService: UtilisateurService, private router: Router) {
