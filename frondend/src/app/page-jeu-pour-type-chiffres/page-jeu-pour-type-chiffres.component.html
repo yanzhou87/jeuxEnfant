@@ -1,8 +1,6 @@
-<div class="vh-100" [style.background-color]="randomColorBackground">
+<app-page-resultat *ngIf="resultat"></app-page-resultat>
+<div class="vh-100" [style.background-color]="randomColorBackground" *ngIf="!resultat">
   <app-header></app-header>
-  <p class="m-1 text-center text-success display-1"  *ngIf="reussi">
-    Bravo !!!
-  </p>
   <div class="row m-3 align-items-center vh-100">
     <div class="col-4 m-1 text-center">
       <div class="card">

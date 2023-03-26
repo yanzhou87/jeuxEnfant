@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {UtilisateurService} from "../services/services.component";
-import {Router} from "@angular/router";
 import {IconsListe} from "../outils/iconsListe";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 
@@ -26,7 +25,7 @@ export class PageJeuPourTypeChiffresComponent {
 
   myicon : string = this.getIcon()
 
-  reussi : boolean = false;
+  resultat : boolean = false;
 
   constructor(private utilisateurService: UtilisateurService) {
     utilisateurService.getBonRepondre();
@@ -89,7 +88,7 @@ export class PageJeuPourTypeChiffresComponent {
 
   getRepondre(choix : number): void {
      if(this.bonRepondre == choix){
-       this.reussi = true;
+       this.resultat = true;
        this.bonRepondre = this.utilisateurService.getBonResultat()
        this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
        this.myicon = this.getIcon()
@@ -97,8 +96,8 @@ export class PageJeuPourTypeChiffresComponent {
        this.randomColorButtonProchain = this.getRandomColorButtonProchain();
        this.choisirLesRepondses()
      } else {
-       this.reussi = false;
+       this.resultat = true;
      }
-     console.log(this.reussi)
+     console.log(this.resultat)
   }
 }

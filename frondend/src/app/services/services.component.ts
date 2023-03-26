@@ -17,6 +17,10 @@ export class UtilisateurService {
   private nombreMax : number = 0 ;
   private nombreMin : number = 0;
   private repondre : number = 0;
+  private estAfficheResultat : boolean = false;
+  private bonResultat : boolean = false;
+  private mauvaisResultat : boolean = false;
+
   constructor(private http: HttpClient, private router: Router) {
 
   }
@@ -89,5 +93,44 @@ export class UtilisateurService {
 
   public getBonResultat():number{
     return this.repondre;
+  }
+
+  public setEstAfficheResultat(estAfficheResultat : boolean):void{
+    if(estAfficheResultat){
+      localStorage.setItem("estAfficheResultat", "true");
+    }else{
+      localStorage.setItem("estAfficheResultat", "false");
+    }
+
+    this.estAfficheResultat = estAfficheResultat;
+  }
+
+  public getEstAfficheResultat(): boolean{
+    this.estAfficheResultat = !!localStorage.getItem("estAfficheResultat");
+    return this.estAfficheResultat;
+  }
+  public setBonResultatDeTonChoix(bonResultat : boolean) {
+    if(bonResultat){
+      localStorage.setItem("bonResultatDeTonChoix", "true");
+    }else{
+      localStorage.setItem("bonResultatDeTonChoix", "false");
+    }
+    this.bonResultat = bonResultat;
+  }
+  public getBonResultatDeTonChoix(): boolean{
+    this.bonResultat = !!localStorage.getItem("bonResultatDeTonChoix");
+    return this.bonResultat;
+  }
+  public setMauvaisResultatDeTonChoix(mauvaisResultat : boolean) {
+    if(mauvaisResultat){
+      localStorage.setItem("mauvaisResultat", "true");
+    }else{
+      localStorage.setItem("mauvaisResultat", "false");
+    }
+    this.bonResultat = mauvaisResultat;
+  }
+  public getmMauvaisResultatDeTonChoix(): boolean{
+    this.mauvaisResultat = !!localStorage.getItem("mauvaisResultat");
+    return this.mauvaisResultat;
   }
 }
