@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 import {MonNombre} from "../outils/MonNombre";
 import {Utilisateur} from "../outils/Utilisateur";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {IconsListe} from "../outils/iconsListe";
 
 @Injectable({providedIn: 'root'})
 export class UtilisateurService {
@@ -17,9 +18,8 @@ export class UtilisateurService {
   private nombreMax : number = 0 ;
   private nombreMin : number = 0;
   private repondre : number = 0;
-  private estAfficheResultat : boolean = false;
+
   private bonResultat : boolean = false;
-  private mauvaisResultat : boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {
 
@@ -78,11 +78,13 @@ export class UtilisateurService {
   }
 
   public getBonRepondre():void{
+    console.log("getBonRepondre")
     this.http.get<Utilisateur>(`${this.apiServiceUrl}/repondre`).subscribe(
       {
         next: value => {
           localStorage.setItem("repondre", value.repondre.toString());
           this.repondre = Number(localStorage.getItem("repondre"));
+          console.log("getBonRepondre serve : "+this.repondre)
         },
         error: err => {
           console.log("err : " + err)
@@ -95,20 +97,6 @@ export class UtilisateurService {
     return this.repondre;
   }
 
-  public setEstAfficheResultat(estAfficheResultat : boolean):void{
-    if(estAfficheResultat){
-      localStorage.setItem("estAfficheResultat", "true");
-    }else{
-      localStorage.setItem("estAfficheResultat", "false");
-    }
-
-    this.estAfficheResultat = estAfficheResultat;
-  }
-
-  public getEstAfficheResultat(): boolean{
-    this.estAfficheResultat = !!localStorage.getItem("estAfficheResultat");
-    return this.estAfficheResultat;
-  }
   public setBonResultatDeTonChoix(bonResultat : boolean) {
     if(bonResultat){
       localStorage.setItem("bonResultatDeTonChoix", "true");
@@ -118,19 +106,12 @@ export class UtilisateurService {
     this.bonResultat = bonResultat;
   }
   public getBonResultatDeTonChoix(): boolean{
-    this.bonResultat = !!localStorage.getItem("bonResultatDeTonChoix");
     return this.bonResultat;
   }
-  public setMauvaisResultatDeTonChoix(mauvaisResultat : boolean) {
-    if(mauvaisResultat){
-      localStorage.setItem("mauvaisResultat", "true");
-    }else{
-      localStorage.setItem("mauvaisResultat", "false");
-    }
-    this.bonResultat = mauvaisResultat;
-  }
-  public getmMauvaisResultatDeTonChoix(): boolean{
-    this.mauvaisResultat = !!localStorage.getItem("mauvaisResultat");
-    return this.mauvaisResultat;
+
+  getIcon(): string {
+    let monIcon = Object.values(IconsListe);
+    let randomIndex = Math.floor(Math.random() * monIcon.length);
+    return monIcon[randomIndex].valueOf().toString();
   }
 }

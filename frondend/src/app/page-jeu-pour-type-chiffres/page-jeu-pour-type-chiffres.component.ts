@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {UtilisateurService} from "../services/services.component";
-import {IconsListe} from "../outils/iconsListe";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 
 @Component({
@@ -19,22 +18,23 @@ export class PageJeuPourTypeChiffresComponent {
   min : number = 0;
 
   bonRepondre : number = 0;
-  nbRandomPourCard1: number = 0;
+  nbRandomPourCard1: number = 1;
   nbRandomPourCard2: number = 0;
   nbRandomPourCard3: number = 0;
 
-  myicon : string = this.getIcon()
+  myicon : string = ""
 
   resultat : boolean = false;
 
   constructor(private utilisateurService: UtilisateurService) {
-    utilisateurService.getBonRepondre();
-    this.bonRepondre = utilisateurService.getBonResultat()
+    this.utilisateurService.getBonRepondre();
     this.min = utilisateurService.getNombreMin();
     this.max = utilisateurService.getNombreMax();
     this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+    this.myicon = utilisateurService.getIcon()
+    this.bonRepondre = utilisateurService.getBonResultat()
+    console.log("bonRepondre :"+this.bonRepondre)
     this.choisirLesRepondses()
-    console.log(this.myicon)
   }
 
   getRandomColorBackground(): string {
@@ -60,6 +60,7 @@ export class PageJeuPourTypeChiffresComponent {
       this.nbRandomPourCard2 = this.nbFaux()
       this.nbRandomPourCard3 = this.numbreRandom
     }
+    console.log("choisirLesRepondses"+this.bonRepondre)
   }
   nbFaux() : number{
     let randomNumber;
@@ -74,12 +75,6 @@ export class PageJeuPourTypeChiffresComponent {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }
 
-  getIcon(): string {
-    let monIcon = Object.values(IconsListe);
-    let randomIndex = Math.floor(Math.random() * monIcon.length);
-    return monIcon[randomIndex].valueOf().toString();
-  }
-
   getRandomColorButtonProchain(): string {
     let colorsProchain = Object.values(ColorsRandomProchain);
     let randomIndex = Math.floor(Math.random() * colorsProchain.length);
@@ -88,16 +83,17 @@ export class PageJeuPourTypeChiffresComponent {
 
   getRepondre(choix : number): void {
      if(this.bonRepondre == choix){
-       this.resultat = true;
+       this.resultat = true
        this.bonRepondre = this.utilisateurService.getBonResultat()
        this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-       this.myicon = this.getIcon()
+       this.myicon = this.utilisateurService.getIcon()
        this.randomColorBackground = this.getRandomColorBackground();
        this.randomColorButtonProchain = this.getRandomColorButtonProchain();
+       this.utilisateurService.setBonResultatDeTonChoix(true)
        this.choisirLesRepondses()
      } else {
-       this.resultat = true;
+       this.resultat = false
+       this.utilisateurService.setBonResultatDeTonChoix(false)
      }
-     console.log(this.resultat)
   }
 }
