@@ -1,0 +1,21 @@
+
+<div class="vh-100" [style.background-color]="randomColorBackground">
+  <app-header></app-header>
+
+  <div class="m-1 text-center text-success display-1" *ngIf="reussi">
+    Bravo !!!
+    <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
+      <a routerLink="/jeuavecletypefrancais" (click)="changePage()">Sélectionner de nouveau</a>
+      <a routerLink="/menu">home</a>
+    </div>
+  </div>
+
+  <div class="m-1 text-center text-success display-1" *ngIf="!reussi">
+    Malheureusement !!!! Votre choix est mauvais !!!!
+    <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
+      <a routerLink="/jeuavecletypefrancais">Sélectionner de nouveau</a>
+      <a routerLink="/menu" >home</a>
+    </div>
+  </div>
+</div>
+

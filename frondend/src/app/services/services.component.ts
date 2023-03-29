@@ -77,20 +77,24 @@ export class UtilisateurService {
     })
   }
 
-  public getBonRepondre():void{
-    console.log("getBonRepondre")
-    this.http.get<Utilisateur>(`${this.apiServiceUrl}/repondre`).subscribe(
-      {
-        next: value => {
-          localStorage.setItem("repondre", value.repondre.toString());
-          this.repondre = Number(localStorage.getItem("repondre"));
-          console.log("getBonRepondre serve : "+this.repondre)
-        },
-        error: err => {
-          console.log("err : " + err)
+  public getBonRepondre(): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+      console.log("getBonRepondre")
+      this.http.get<Utilisateur>(`${this.apiServiceUrl}/repondre`).subscribe(
+        {
+          next: value => {
+            localStorage.setItem("repondre", value.repondre.toString());
+            const repondre = Number(localStorage.getItem("repondre"));
+            console.log("getBonRepondre serve : " + repondre)
+            resolve(repondre);
+          },
+          error: err => {
+            console.log("err : " + err);
+            reject(err);
+          }
         }
-      }
-    )
+      )
+    });
   }
 
   public getBonResultat():number{

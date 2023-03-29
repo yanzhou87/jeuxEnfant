@@ -27,14 +27,19 @@ export class PageJeuPourTypeChiffresComponent {
   resultat : boolean = false;
 
   constructor(private utilisateurService: UtilisateurService) {
-    this.utilisateurService.getBonRepondre();
-    this.min = utilisateurService.getNombreMin();
-    this.max = utilisateurService.getNombreMax();
-    this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-    this.myicon = utilisateurService.getIcon()
-    this.bonRepondre = utilisateurService.getBonResultat()
-    console.log("bonRepondre :"+this.bonRepondre)
-    this.choisirLesRepondses()
+    (async () => {
+      try {
+        this.bonRepondre = await this.utilisateurService.getBonRepondre();
+        console.log("bonRepondre :" + this.bonRepondre)
+        this.min = this.utilisateurService.getNombreMin();
+        this.max = this.utilisateurService.getNombreMax();
+        this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+        this.myicon = this.utilisateurService.getIcon()
+        this.choisirLesRepondses();
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   }
 
   getRandomColorBackground(): string {
