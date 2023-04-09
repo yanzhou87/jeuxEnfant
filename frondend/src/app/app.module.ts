@@ -12,6 +12,7 @@ import { PageApprendrePourTypeFrancaisComponent } from './page-apprendre-pour-ty
 import { HeaderComponent } from './header/header.component';
 import {FormsModule} from "@angular/forms";
 import { PageJeuPourTypeChiffresComponent } from './page-jeu-pour-type-chiffres/page-jeu-pour-type-chiffres.component';
+import { PageJeuPourTypeFrancaisComponent } from './page-jeu-pour-type-francais/page-jeu-pour-type-francais.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PageJeuPourTypeChiffresComponent } from './page-jeu-pour-type-chiffres/
     PageApprendrePourTypeChiffresComponent,
     PageApprendrePourTypeFrancaisComponent,
     HeaderComponent,
-    PageJeuPourTypeChiffresComponent
+    PageJeuPourTypeChiffresComponent,
+    PageJeuPourTypeFrancaisComponent
   ],
     imports: [
         BrowserModule,

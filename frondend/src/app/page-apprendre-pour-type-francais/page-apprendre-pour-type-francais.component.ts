@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {ColorsRandomPrecedent} from "../outils/ColorsRandomButtonPrecedent";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
-import {UtilisateurService} from "../services/services.component";
+import {ListChiffresEnFrancais} from "../outils/ListChiffresEnFrancais";
 
 @Component({
   selector: 'app-page-apprendre-pour-type-francais',
@@ -10,7 +10,7 @@ import {UtilisateurService} from "../services/services.component";
   styleUrls: ['./page-apprendre-pour-type-francais.component.css']
 })
 export class PageApprendrePourTypeFrancaisComponent {
-  chiffresEnFrancais = ["Un","Deux","Trois","Quatre","Cinq","Six","Sept","Huit","Neuf","Dix"];
+  monChiffresEnFrancais : ListChiffresEnFrancais = new ListChiffresEnFrancais();
   chiffreCourant = 0;
   chiffreCourantEnMot = "Un";
   randomColorBackground: string = this.getRandomColorBackground();
@@ -38,7 +38,7 @@ export class PageApprendrePourTypeFrancaisComponent {
   setChiffresPrecedent(){
     if(this.chiffreCourant != 0){
       this.chiffreCourant -= 1 ;
-      this.chiffreCourantEnMot = this.chiffresEnFrancais[this.chiffreCourant];
+      this.chiffreCourantEnMot = this.monChiffresEnFrancais.chiffresEnFrancais[this.chiffreCourant];
       this.randomColorBackground = this.getRandomColorBackground();
     }
   }
@@ -46,7 +46,7 @@ export class PageApprendrePourTypeFrancaisComponent {
   setChiffresProchain(){
     if(this.chiffreCourant != 9){
       this.chiffreCourant += 1 ;
-      this.chiffreCourantEnMot = this.chiffresEnFrancais[this.chiffreCourant];
+      this.chiffreCourantEnMot = this.monChiffresEnFrancais.chiffresEnFrancais[this.chiffreCourant];
       this.randomColorBackground = this.getRandomColorBackground();
     }
   }

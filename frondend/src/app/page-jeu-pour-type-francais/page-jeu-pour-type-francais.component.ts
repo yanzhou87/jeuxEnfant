@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
-import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {UtilisateurService} from "../services/services.component";
+import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
+import {ListChiffresEnFrancais} from "../outils/ListChiffresEnFrancais";
 
 @Component({
-  selector: 'app-page-jeu-pour-type-chiffres',
-  templateUrl: './page-jeu-pour-type-chiffres.component.html',
-  styleUrls: ['./page-jeu-pour-type-chiffres.component.css']
+  selector: 'app-page-jeu-pour-type-francais',
+  templateUrl: './page-jeu-pour-type-francais.component.html',
+  styleUrls: ['./page-jeu-pour-type-francais.component.css']
 })
-export class PageJeuPourTypeChiffresComponent {
+export class PageJeuPourTypeFrancaisComponent {
 
   randomColorBackground: string = this.getRandomColorBackground();
   randomColorButtonProchain: string = this.getRandomColorButtonProchain();
 
+  mot : string = '';
   numbreRandom : number = 0;
   max : number = 0;
   min : number = 0;
@@ -31,9 +33,9 @@ export class PageJeuPourTypeChiffresComponent {
       try {
         this.bonRepondre = await this.utilisateurService.getBonRepondre();
         console.log("bonRepondre :" + this.bonRepondre)
-        this.min = this.utilisateurService.getNombreMin();
-        this.max = this.utilisateurService.getNombreMax();
         this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+        this.mot = new ListChiffresEnFrancais().chiffresEnFrancais[this.numbreRandom]
+        this.max = new ListChiffresEnFrancais().chiffresEnFrancais.length - 1
         this.myicon = this.utilisateurService.getIcon()
         this.choisirLesRepondses();
       } catch (err) {
@@ -50,20 +52,30 @@ export class PageJeuPourTypeChiffresComponent {
 
   choisirLesRepondses(){
     console.log("choisirLesRepondses"+this.bonRepondre)
+    console.log("max : "+this.max)
     if (this.bonRepondre == 1){
       this.nbRandomPourCard1 = this.numbreRandom
       this.nbRandomPourCard2 = this.nbFaux()
       this.nbRandomPourCard3 = this.nbFaux()
+      while (this.nbRandomPourCard3 == this.nbRandomPourCard2){
+        this.nbRandomPourCard3 = this.nbFaux()
+      }
     }
     if (this.bonRepondre == 2){
       this.nbRandomPourCard1 = this.nbFaux()
       this.nbRandomPourCard2 = this.numbreRandom
       this.nbRandomPourCard3 = this.nbFaux()
+      while (this.nbRandomPourCard1 == this.nbRandomPourCard3){
+        this.nbRandomPourCard3 = this.nbFaux()
+      }
     }
     if (this.bonRepondre == 3){
       this.nbRandomPourCard1 = this.nbFaux()
       this.nbRandomPourCard2 = this.nbFaux()
       this.nbRandomPourCard3 = this.numbreRandom
+      while (this.nbRandomPourCard1 == this.nbRandomPourCard2){
+        this.nbRandomPourCard2 = this.nbFaux()
+      }
     }
     console.log("choisirLesRepondses"+this.bonRepondre)
   }
@@ -87,27 +99,26 @@ export class PageJeuPourTypeChiffresComponent {
   }
 
   getRepondre(choix : number): void {
-     if(this.bonRepondre == choix){
-       (async () => {
-         try {
-           this.bonRepondre = await this.utilisateurService.getBonRepondre();
-           this.resultat = true
-           console.log("bonRepondre :" + this.bonRepondre)
-           this.min = this.utilisateurService.getNombreMin();
-           this.max = this.utilisateurService.getNombreMax();
-           this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-           this.myicon = this.utilisateurService.getIcon()
-           this.randomColorBackground = this.getRandomColorBackground();
-           this.randomColorButtonProchain = this.getRandomColorButtonProchain();
-           this.utilisateurService.setBonResultatDeTonChoix(true)
-           this.choisirLesRepondses();
-         } catch (err) {
-           console.error(err);
-         }
-       })();
-     } else {
-       this.resultat = false
-       this.utilisateurService.setBonResultatDeTonChoix(false)
-     }
+    if(this.bonRepondre == choix){
+      (async () => {
+        try {
+          this.bonRepondre = await this.utilisateurService.getBonRepondre();
+          this.resultat = true
+          console.log("bonRepondre :" + this.bonRepondre)
+          this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+          this.mot = new ListChiffresEnFrancais().chiffresEnFrancais[this.numbreRandom]
+          this.myicon = this.utilisateurService.getIcon()
+          this.randomColorBackground = this.getRandomColorBackground();
+          this.randomColorButtonProchain = this.getRandomColorButtonProchain();
+          this.utilisateurService.setBonResultatDeTonChoix(true)
+          this.choisirLesRepondses();
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    } else {
+      this.resultat = false
+      this.utilisateurService.setBonResultatDeTonChoix(false)
+    }
   }
 }
