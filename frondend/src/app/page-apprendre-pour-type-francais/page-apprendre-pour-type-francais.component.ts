@@ -72,11 +72,21 @@ export class PageApprendrePourTypeFrancaisComponent {
   }
 
   saveChangesPourChiffreEnMot() {
-    if(this.nombreMaxPourChiffreEnMot < this.nombreMinPourChiffreEnMot) {
+    if((this.nombreMaxPourChiffreEnMot < this.nombreMinPourChiffreEnMot) ||
+      this.nombreMaxPourChiffreEnMot < 0 || this.nombreMinPourChiffreEnMot < 0) {
+      console.log("avant erreur" + this.erreurMaxPourChiffreEnMot)
       this.erreurMaxPourChiffreEnMot = true;
+      console.log(" erreur"+this.erreurMaxPourChiffreEnMot)
     }else {
-      this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot,this.nombreMinPourChiffreEnMot);
-      this.monChiffresEnFrancais.maListChiffreEnMot = this.utilisateurService.getChiffreEnFrancais();
+      (async () => {
+        try {
+          await this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot - 1,this.nombreMinPourChiffreEnMot - 1);
+          this.monChiffresEnFrancais.maListChiffreEnMot = this.utilisateurService.getChiffreEnFrancais();
+          this.chiffreCourantEnMot = this.monChiffresEnFrancais.maListChiffreEnMot[0]
+        } catch (err) {
+          console.error(err);
+        }
+      })();
     }
   }
 }
