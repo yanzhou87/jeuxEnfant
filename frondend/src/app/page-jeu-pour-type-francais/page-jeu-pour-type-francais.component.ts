@@ -34,8 +34,8 @@ export class PageJeuPourTypeFrancaisComponent {
         this.bonRepondre = await this.utilisateurService.getBonRepondre();
         console.log("bonRepondre :" + this.bonRepondre)
         this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-        this.mot = new ListChiffresEnFrancais().chiffresEnFrancais[this.numbreRandom]
-        this.max = new ListChiffresEnFrancais().chiffresEnFrancais.length - 1
+        this.mot = new ListChiffresEnFrancais().maListChiffreEnMot[this.numbreRandom]
+        this.max = new ListChiffresEnFrancais().maListChiffreEnMot.length - 1
         this.myicon = this.utilisateurService.getIcon()
         this.choisirLesRepondses();
       } catch (err) {
@@ -106,7 +106,7 @@ export class PageJeuPourTypeFrancaisComponent {
           this.resultat = true
           console.log("bonRepondre :" + this.bonRepondre)
           this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-          this.mot = new ListChiffresEnFrancais().chiffresEnFrancais[this.numbreRandom]
+          this.mot = new ListChiffresEnFrancais().maListChiffreEnMot[this.numbreRandom]
           this.myicon = this.utilisateurService.getIcon()
           this.randomColorBackground = this.getRandomColorBackground();
           this.randomColorButtonProchain = this.getRandomColorButtonProchain();

@@ -3,6 +3,8 @@ import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {ColorsRandomPrecedent} from "../outils/ColorsRandomButtonPrecedent";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 import {ListChiffresEnFrancais} from "../outils/ListChiffresEnFrancais";
+import {UtilisateurService} from "../services/services.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-page-apprendre-pour-type-francais',
@@ -16,6 +18,24 @@ export class PageApprendrePourTypeFrancaisComponent {
   randomColorBackground: string = this.getRandomColorBackground();
   randomColorButtonPrecedent: string = this.getRandomColorButtonPrecedent();
   randomColorButtonProchain: string = this.getRandomColorButtonProchain();
+  nombreMaxPourChiffreEnMot: number = 0;
+  nombreMinPourChiffreEnMot: number = 0;
+  erreurMaxPourChiffreEnMot : boolean = false;
+
+  constructor(private utilisateurService: UtilisateurService, private router: Router) {
+    (async () => {
+      try {
+        await this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot,this.nombreMinPourChiffreEnMot);
+        this.monChiffresEnFrancais.maListChiffreEnMot = await this.utilisateurService.getChiffreEnFrancais();
+        console.log("app : "+this.monChiffresEnFrancais.maListChiffreEnMot)
+
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+
+
+  }
 
   getRandomColorBackground(): string {
     let colorsBackground = Object.values(ColorsRandomBackground);
@@ -38,16 +58,25 @@ export class PageApprendrePourTypeFrancaisComponent {
   setChiffresPrecedent(){
     if(this.chiffreCourant != 0){
       this.chiffreCourant -= 1 ;
-      this.chiffreCourantEnMot = this.monChiffresEnFrancais.chiffresEnFrancais[this.chiffreCourant];
+      this.chiffreCourantEnMot = this.monChiffresEnFrancais.maListChiffreEnMot[this.chiffreCourant];
       this.randomColorBackground = this.getRandomColorBackground();
     }
   }
 
   setChiffresProchain(){
-    if(this.chiffreCourant != 9){
+    if(this.chiffreCourant != this.monChiffresEnFrancais.maListChiffreEnMot.length-1){
       this.chiffreCourant += 1 ;
-      this.chiffreCourantEnMot = this.monChiffresEnFrancais.chiffresEnFrancais[this.chiffreCourant];
+      this.chiffreCourantEnMot = this.monChiffresEnFrancais.maListChiffreEnMot[this.chiffreCourant];
       this.randomColorBackground = this.getRandomColorBackground();
+    }
+  }
+
+  saveChangesPourChiffreEnMot() {
+    if(this.nombreMaxPourChiffreEnMot < this.nombreMinPourChiffreEnMot) {
+      this.erreurMaxPourChiffreEnMot = true;
+    }else {
+      this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot,this.nombreMinPourChiffreEnMot);
+      this.monChiffresEnFrancais.maListChiffreEnMot = this.utilisateurService.getChiffreEnFrancais();
     }
   }
 }

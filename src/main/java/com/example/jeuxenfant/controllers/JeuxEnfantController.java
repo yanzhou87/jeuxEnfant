@@ -1,5 +1,6 @@
 package com.example.jeuxenfant.controllers;
 
+import com.example.jeuxenfant.DTOs.ListChiffreEnMot;
 import com.example.jeuxenfant.DTOs.MonNombreDTO;
 import com.example.jeuxenfant.models.MonNombre;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
@@ -70,6 +71,21 @@ public class JeuxEnfantController {
         try{
             UtilisateurDTO utilisateurDTO = serviceJeuxEnfant.getRepondre();
             return new ResponseEntity<>(utilisateurDTO, HttpStatus.OK);
+        }catch (Exception message){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/meschiffreenmot")
+    public ResponseEntity<ListChiffreEnMot> getMesChiffreEnMot(@RequestBody MonNombreDTO nombre) {
+        System.out.println("mot");
+        if (nombre.getMax() < 0 || nombre.getMin() < 0){
+            return ResponseEntity.badRequest().build();
+        }
+        try{
+            ListChiffreEnMot listChiffreEnMot = serviceJeuxEnfant.getList(nombre);
+            System.out.println(listChiffreEnMot);
+            return new ResponseEntity<>(listChiffreEnMot, HttpStatus.OK);
         }catch (Exception message){
             return ResponseEntity.notFound().build();
         }

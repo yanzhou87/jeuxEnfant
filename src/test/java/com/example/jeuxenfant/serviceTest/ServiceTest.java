@@ -1,11 +1,9 @@
 package com.example.jeuxenfant.serviceTest;
 
 
-import com.example.jeuxenfant.DTOs.ChoixDeType;
-import com.example.jeuxenfant.DTOs.MonNombreDTO;
-import com.example.jeuxenfant.DTOs.TypePrincipal;
-import com.example.jeuxenfant.DTOs.UtilisateurDTO;
+import com.example.jeuxenfant.DTOs.*;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -135,6 +135,32 @@ public class ServiceTest {
         assertThat(utilisateurDTO.getRepondre()).isNotEqualTo(4);
 
 
+    }
+
+    @Test
+    void getListChiffreEnMotHappyDayTest() throws Exception {
+        // Arrange
+        final MonNombreDTO monNombreDTO = new MonNombreDTO();
+        monNombreDTO.setMax(0);
+        monNombreDTO.setMin(0);
+
+        // Act
+        ListChiffreEnMot listChiffreEnMot = serviceJeuxEnfant.getList(monNombreDTO);
+
+        // Assert
+        assertThat(listChiffreEnMot.getMaListChiffreEnMot().size()).isEqualTo(20);
+    }
+
+    @Test
+    void getListChiffreEnMotBadTest() throws Exception {
+        final MonNombreDTO monNombreDTO = new MonNombreDTO();
+        monNombreDTO.setMax(-1);
+        monNombreDTO.setMin(0);
+        // Act
+        ListChiffreEnMot listChiffreEnMot = serviceJeuxEnfant.getList(monNombreDTO);
+
+        // Assert
+        assertThat(listChiffreEnMot.getMaListChiffreEnMot().size()).isNotEqualTo(20);
     }
 }
 

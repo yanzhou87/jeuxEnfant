@@ -9,6 +9,7 @@ import {MonNombre} from "../outils/MonNombre";
 import {Utilisateur} from "../outils/Utilisateur";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {IconsListe} from "../outils/iconsListe";
+import {ListChiffresEnFrancais} from "../outils/ListChiffresEnFrancais";
 
 @Injectable({providedIn: 'root'})
 export class UtilisateurService {
@@ -18,7 +19,7 @@ export class UtilisateurService {
   private nombreMax : number = 0 ;
   private nombreMin : number = 0;
   private repondre : number = 0;
-
+  private chiffresEnFrancais : string[] = [];
   private bonResultat : boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -117,5 +118,28 @@ export class UtilisateurService {
     let monIcon = Object.values(IconsListe);
     let randomIndex = Math.floor(Math.random() * monIcon.length);
     return monIcon[randomIndex].valueOf().toString();
+  }
+
+  public getChiffreEnMot(nombreMax : number, nombreMin : number):Promise<ListChiffresEnFrancais>{
+    return new Promise<ListChiffresEnFrancais>((resolve, reject) => {
+      this.http.put<ListChiffresEnFrancais>(`${this.apiServiceUrl}/meschiffreenmot`, {
+      max : nombreMax,
+      min : nombreMin
+    }).subscribe(
+        {
+          next: (value: ListChiffresEnFrancais) => {
+            this.chiffresEnFrancais = value.maListChiffreEnMot;
+            resolve(value);
+          },
+          error: err => {
+            console.log("err : " + err);
+            reject(err);
+          }
+        }
+      )
+    });
+  }
+  getChiffreEnFrancais(): string[] {
+    return this.chiffresEnFrancais;
   }
 }

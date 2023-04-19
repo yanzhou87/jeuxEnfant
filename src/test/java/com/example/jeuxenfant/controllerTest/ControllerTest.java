@@ -1,10 +1,7 @@
 package com.example.jeuxenfant.controllerTest;
 
 
-import com.example.jeuxenfant.DTOs.ChoixDeType;
-import com.example.jeuxenfant.DTOs.MonNombreDTO;
-import com.example.jeuxenfant.DTOs.TypePrincipal;
-import com.example.jeuxenfant.DTOs.UtilisateurDTO;
+import com.example.jeuxenfant.DTOs.*;
 import com.example.jeuxenfant.controllers.JeuxEnfantController;
 import com.example.jeuxenfant.services.ServiceJeuxEnfant;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,6 +34,7 @@ public class ControllerTest {
     private static final String PAGE_PRINCIPAL_URL = "/menu";
     private static final String NOMBRE_URL = "/nombre";
     private static final String REPONDRE_URL = "/repondre";
+    private static final String LIST_URL = "/meschiffreenmot";
     MockMvc mockMvc;
 
     @InjectMocks
@@ -153,5 +154,59 @@ public class ControllerTest {
     void testRepondreUrlNotFound()throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/reponddre"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testNombreMaxMinPourListChiffreEnMotHappyDay()throws Exception{
+        // Arrange
+        List<String> maListChiffreEnMot = new ArrayList<>();
+        maListChiffreEnMot.add("Un");
+        maListChiffreEnMot.add("Deux");
+        maListChiffreEnMot.add("Trois");
+        maListChiffreEnMot.add("Quatre");
+        maListChiffreEnMot.add("Cinq");
+        maListChiffreEnMot.add("Six");
+        maListChiffreEnMot.add("Sept");
+        maListChiffreEnMot.add("Huit");
+        maListChiffreEnMot.add("Neuf");
+        maListChiffreEnMot.add("Dix");
+
+        final MonNombreDTO monNombreDTO = new MonNombreDTO();
+        ObjectMapper objectMapper = new ObjectMapper();
+        monNombreDTO.setMax(0);
+        monNombreDTO.setMin(0);
+
+        ListChiffreEnMot listChiffreEnMot = new ListChiffreEnMot();
+        listChiffreEnMot.setMaListChiffreEnMot(maListChiffreEnMot);
+
+        when(serviceJeuxEnfant.getList(monNombreDTO)).thenReturn(listChiffreEnMot);
+        // Act-Assert
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put(LIST_URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(monNombreDTO)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testListChiffreEnMotUrlNotFound()throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/mesCchiffreenmot"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testListChiffreEnMotBadRequest()throws Exception{
+        // Arrange
+        final MonNombreDTO monNombreDTO = new MonNombreDTO();
+        ObjectMapper objectMapper = new ObjectMapper();
+        monNombreDTO.setMax(-1);
+        monNombreDTO.setMin(-1);
+
+        // Act-Assert
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put(LIST_URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(monNombreDTO)))
+                .andExpect(status().isBadRequest());
     }
 }
