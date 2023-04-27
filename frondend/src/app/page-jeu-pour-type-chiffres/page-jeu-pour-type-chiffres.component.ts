@@ -32,7 +32,9 @@ export class PageJeuPourTypeChiffresComponent {
         this.bonRepondre = await this.utilisateurService.getBonRepondre();
         console.log("bonRepondre :" + this.bonRepondre)
         this.min = this.utilisateurService.getNombreMin();
+        console.log('min : ' + this.min)
         this.max = this.utilisateurService.getNombreMax();
+        console.log('max : ' + this.max)
         this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
         this.myicon = this.utilisateurService.getIcon()
         this.choisirLesRepondses();
@@ -49,7 +51,7 @@ export class PageJeuPourTypeChiffresComponent {
   }
 
   choisirLesRepondses(){
-    console.log("choisirLesRepondses"+this.bonRepondre)
+    console.log("choisirLesRepondses bonRepondre : "+this.bonRepondre)
     if (this.bonRepondre == 1){
       this.nbRandomPourCard1 = this.numbreRandom
       this.nbRandomPourCard2 = this.nbFaux()
@@ -65,7 +67,7 @@ export class PageJeuPourTypeChiffresComponent {
       this.nbRandomPourCard2 = this.nbFaux()
       this.nbRandomPourCard3 = this.numbreRandom
     }
-    console.log("choisirLesRepondses"+this.bonRepondre)
+    console.log("choisirLesRepondses1 bonRepondre : "+this.bonRepondre)
   }
   nbFaux() : number{
     let randomNumber;
@@ -87,14 +89,13 @@ export class PageJeuPourTypeChiffresComponent {
   }
 
   getRepondre(choix : number): void {
+
      if(this.bonRepondre == choix){
        (async () => {
          try {
            this.bonRepondre = await this.utilisateurService.getBonRepondre();
            this.resultat = true
            console.log("bonRepondre :" + this.bonRepondre)
-           this.min = this.utilisateurService.getNombreMin();
-           this.max = this.utilisateurService.getNombreMax();
            this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
            this.myicon = this.utilisateurService.getIcon()
            this.randomColorBackground = this.getRandomColorBackground();

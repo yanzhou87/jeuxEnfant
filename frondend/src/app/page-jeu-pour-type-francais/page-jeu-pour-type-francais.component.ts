@@ -28,14 +28,19 @@ export class PageJeuPourTypeFrancaisComponent {
 
   resultat : boolean = false;
 
+  listMots : ListChiffresEnFrancais = new ListChiffresEnFrancais()
+
   constructor(private utilisateurService: UtilisateurService) {
     (async () => {
       try {
         this.bonRepondre = await this.utilisateurService.getBonRepondre();
         console.log("bonRepondre :" + this.bonRepondre)
-        this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-        this.mot = new ListChiffresEnFrancais().maListChiffreEnMot[this.numbreRandom]
-        this.max = new ListChiffresEnFrancais().maListChiffreEnMot.length - 1
+        this.listMots = await utilisateurService.getChiffreEnMot(0,0)
+        console.log("listMots : " + this.listMots.maListChiffreEnMot)
+        this.numbreRandom = Math.floor(Math.random() * (20 - this.min + 1) + this.min);
+        this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]
+        this.max = this.listMots.maListChiffreEnMot[this.numbreRandom].length - 1
+        console.log("max111 : " + this.max)
         this.myicon = this.utilisateurService.getIcon()
         this.choisirLesRepondses();
       } catch (err) {
@@ -103,10 +108,12 @@ export class PageJeuPourTypeFrancaisComponent {
       (async () => {
         try {
           this.bonRepondre = await this.utilisateurService.getBonRepondre();
-          this.resultat = true
           console.log("bonRepondre :" + this.bonRepondre)
-          this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-          this.mot = new ListChiffresEnFrancais().maListChiffreEnMot[this.numbreRandom]
+          this.resultat = true
+          this.listMots = await this.utilisateurService.getChiffreEnMot(this.max,this.min)
+          console.log("listMots : " + this.listMots.maListChiffreEnMot)
+          this.numbreRandom = Math.floor(Math.random() * (20 - this.min + 1) + this.min);
+          this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]
           this.myicon = this.utilisateurService.getIcon()
           this.randomColorBackground = this.getRandomColorBackground();
           this.randomColorButtonProchain = this.getRandomColorButtonProchain();
