@@ -121,6 +121,8 @@ export class UtilisateurService {
   }
 
   public getChiffreEnMot(nombreMax : number, nombreMin : number):Promise<ListChiffresEnFrancais>{
+    localStorage.setItem("MinEnMot", nombreMin.toString());
+    localStorage.setItem("MaxEnMot", nombreMax.toString());
     return new Promise<ListChiffresEnFrancais>((resolve, reject) => {
       this.http.put<ListChiffresEnFrancais>(`${this.apiServiceUrl}/meschiffreenmot`, {
       max : nombreMax,
@@ -141,5 +143,15 @@ export class UtilisateurService {
   }
   getChiffreEnFrancais(): string[] {
     return this.chiffresEnFrancais;
+  }
+
+  public getNombreMaxEnMot():number{
+    this.nombreMax = Number(localStorage.getItem("MaxEnMot"));
+    return this.nombreMax;
+  }
+
+  public getNombreMinEnMot():number{
+    this.nombreMin = Number(localStorage.getItem("MinEnMot"));
+    return this.nombreMin;
   }
 }

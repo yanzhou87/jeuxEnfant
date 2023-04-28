@@ -3,6 +3,7 @@ import {UtilisateurService} from "../services/services.component";
 import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 import {ListChiffresEnFrancais} from "../outils/ListChiffresEnFrancais";
+import {max} from "rxjs";
 
 @Component({
   selector: 'app-page-jeu-pour-type-francais',
@@ -16,7 +17,7 @@ export class PageJeuPourTypeFrancaisComponent {
 
   mot : string = '';
   numbreRandom : number = 0;
-  max : number = 0;
+  max : number = 21;
   min : number = 0;
 
   bonRepondre : number = 0;
@@ -35,12 +36,15 @@ export class PageJeuPourTypeFrancaisComponent {
       try {
         this.bonRepondre = await this.utilisateurService.getBonRepondre();
         console.log("bonRepondre :" + this.bonRepondre)
-        this.listMots = await utilisateurService.getChiffreEnMot(0,0)
+        this.min = utilisateurService.getNombreMinEnMot()
+        this.max = utilisateurService.getNombreMaxEnMot()
+        this.listMots = await utilisateurService.getChiffreEnMot(this.max,this.min)
         console.log("listMots : " + this.listMots.maListChiffreEnMot)
-        this.numbreRandom = Math.floor(Math.random() * (20 - this.min + 1) + this.min);
+        this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+        console.log("Random : " + this.numbreRandom)
         this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]
-        this.max = this.listMots.maListChiffreEnMot[this.numbreRandom-1].length - 1
-        console.log("max111 : " + this.max)
+        console.log("mot : " + this.mot)
+        console.log("max111 : " + this.max + " : " + this.min)
         this.myicon = this.utilisateurService.getIcon()
         this.choisirLesRepondses();
       } catch (err) {
@@ -111,7 +115,7 @@ export class PageJeuPourTypeFrancaisComponent {
           console.log("bonRepondre :" + this.bonRepondre)
           this.resultat = true
           console.log("listMots : " + this.listMots.maListChiffreEnMot)
-          this.numbreRandom = Math.floor(Math.random() * (20 - this.min + 1) + this.min);
+          this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
           this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]
           this.myicon = this.utilisateurService.getIcon()
           this.randomColorBackground = this.getRandomColorBackground();

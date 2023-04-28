@@ -41,6 +41,7 @@ public class ServiceJeuxEnfant {
     public ListChiffreEnMot getList(MonNombreDTO nombre){
 
         List<String> maListChiffreEnMot = new ArrayList<>();
+        maListChiffreEnMot.add("Zero");
         maListChiffreEnMot.add("Un");
         maListChiffreEnMot.add("Deux");
         maListChiffreEnMot.add("Trois");
