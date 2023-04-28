@@ -1,11 +1,16 @@
 <div class="vh-100" [style.background-color]="randomColorBackground">
   <app-header></app-header>
-  <div class="row  float-end m-3">
+
+  <div class="d-flex flex-column float-end ">
     <!-- Button trigger modal -->
-    <button type="button" class="col-12 btn btn-info btn-sm text-light" style="width: 200px"
-            data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Paramétrer
-    </button>
+    <div class="row m-3">
+      <button type="button" class="col-12 btn btn-info btn-sm text-light" style="width: 200px"
+              data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Paramétrer
+      </button>
+    </div>
+    <div class="col-12 m-3 text-center my-3" style="width: 200px">Nombre Min : {{ this.nombreMinPourChiffreEnMot }}</div>
+    <div class="col-12 m-3 text-center my-3" style="width: 200px">Nombre Max : {{ this.nombreMaxPourChiffreEnMot }}</div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -19,29 +24,32 @@
             <form class="was-validated">
               <div class="custom-control mb-3">
                 <label class="custom-control-label m-2">Entrez le nombre min : </label><br>
-                <input class="custom-control-input" required type="number" min=0 max=20 name="nombreMin" [(ngModel)]="nombreMinPourChiffreEnMot"><br>
-                <div class="text-danger" >* Le nombre par défaut est 0</div>
+                <input class="custom-control-input" required type="number" min="0" name="nombreMin" [(ngModel)]="nombreMinPourChiffreEnMot"><br>
+                <div class="text-danger">* Le nombre par défaut est 0</div>
               </div>
               <div class="was-validated mb-3">
                 <label class="custom-control-label m-2">Entrez le nombre max : </label><br>
-                <input class="custom-control-input" required type="number" min=0 max=20 name="nombreMax" [(ngModel)]="nombreMaxPourChiffreEnMot"><br><br>
-                <div class="text-danger" *ngIf="erreurMaxPourChiffreEnMot">Le nombre max invalide, doit être supérieur au nombre min</div>
+                <input class="custom-control-input" required type="number" max="20" name="nombreMax" [(ngModel)]="nombreMaxPourChiffreEnMot"><br><br>
+                <div class="text-danger" *ngIf="erreurMaxPourChiffreEnMot">Le nombre max invalide, doit être supérieur au nombre min
+                </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             <button type="button" class="btn" [style.background-color]="randomColorButtonProchain"
-                    (click)="saveChangesPourChiffreEnMot()" [attr.data-bs-dismiss]="erreurMaxPourChiffreEnMot ? null : 'modal'">Enregistrer</button>
+                    (click)="saveChangesPourChiffreEnMot()" [attr.data-bs-dismiss]="erreurMaxPourChiffreEnMot ? null : 'modal'">Enregistrer
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="btn-group-vertical position-absolute top-50 start-50 translate-middle">
     <div class="container-fluid">
       <div class="row">
-        <div class="card" style="width: 38rem; height: 15rem;">
+        <div class="card">
           <div class="card-body">
             <p class="card-text text-center display-1 m-5">{{ chiffreCourantEnMot }}</p>
           </div>
@@ -49,13 +57,11 @@
       </div>
       <div class="row  d-grid gap-2 d-md-flex justify-content-md-between">
         <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonPrecedent"
-                style="width: 200px" (click)="setChiffresPrecedent()">
-          <i class="fa-sharp fa-solid fa-backward-fast"></i>
+                (click)="setChiffresPrecedent()"><i class="fa-sharp fa-solid fa-backward-fast"></i>
           Précédent
         </button>
         <button class="my-3 btn btn-lg text-light" [style.background-color]="randomColorButtonProchain"
-                style="width: 200px" (click)="setChiffresProchain()">
-          Prochain
+                (click)="setChiffresProchain()">Prochain
           <i class="fa-sharp fa-solid fa-forward-fast"></i>
         </button>
       </div>

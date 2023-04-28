@@ -39,7 +39,7 @@ export class PageJeuPourTypeFrancaisComponent {
         console.log("listMots : " + this.listMots.maListChiffreEnMot)
         this.numbreRandom = Math.floor(Math.random() * (20 - this.min + 1) + this.min);
         this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]
-        this.max = this.listMots.maListChiffreEnMot[this.numbreRandom].length - 1
+        this.max = this.listMots.maListChiffreEnMot[this.numbreRandom-1].length - 1
         console.log("max111 : " + this.max)
         this.myicon = this.utilisateurService.getIcon()
         this.choisirLesRepondses();
@@ -110,7 +110,6 @@ export class PageJeuPourTypeFrancaisComponent {
           this.bonRepondre = await this.utilisateurService.getBonRepondre();
           console.log("bonRepondre :" + this.bonRepondre)
           this.resultat = true
-          this.listMots = await this.utilisateurService.getChiffreEnMot(this.max,this.min)
           console.log("listMots : " + this.listMots.maListChiffreEnMot)
           this.numbreRandom = Math.floor(Math.random() * (20 - this.min + 1) + this.min);
           this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]

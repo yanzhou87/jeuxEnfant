@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import {ColorsRandomPrecedent} from "../outils/ColorsRandomButtonPrecedent";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
 import {UtilisateurService} from "../services/services.component";
-import {NavigationEnd, Router} from "@angular/router";
-import {filter} from "rxjs";
-import {IconsListe} from "../outils/iconsListe";
+import { Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
