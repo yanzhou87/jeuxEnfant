@@ -14,7 +14,7 @@ import {Router} from "@angular/router";
 export class PageApprendrePourTypeFrancaisComponent {
   monChiffresEnFrancais : ListChiffresEnFrancais = new ListChiffresEnFrancais();
   chiffreCourant = 0;
-  chiffreCourantEnMot = "Un";
+  chiffreCourantEnMot = "Zero";
   randomColorBackground: string = this.getRandomColorBackground();
   randomColorButtonPrecedent: string = this.getRandomColorButtonPrecedent();
   randomColorButtonProchain: string = this.getRandomColorButtonProchain();
@@ -80,7 +80,7 @@ export class PageApprendrePourTypeFrancaisComponent {
     }else {
       (async () => {
         try {
-          await this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot - 1,this.nombreMinPourChiffreEnMot - 1);
+          await this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot,this.nombreMinPourChiffreEnMot);
           this.monChiffresEnFrancais.maListChiffreEnMot = this.utilisateurService.getChiffreEnFrancais();
           this.chiffreCourantEnMot = this.monChiffresEnFrancais.maListChiffreEnMot[0]
         } catch (err) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ColorsRandomBackground} from "../outils/ColorsRandomBackground";
 import {ColorsRandomPrecedent} from "../outils/ColorsRandomButtonPrecedent";
 import {ColorsRandomProchain} from "../outils/ColorsRandomButtonProchain";
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
   templateUrl: './page-apprendre-pour-type-chiffres.component.html',
   styleUrls: ['./page-apprendre-pour-type-chiffres.component.css']
 })
-export class PageApprendrePourTypeChiffresComponent {
+export class PageApprendrePourTypeChiffresComponent implements OnInit {
 
   randomColorBackground: string = this.getRandomColorBackground();
   randomColorButtonPrecedent: string = this.getRandomColorButtonPrecedent();
@@ -24,6 +24,10 @@ export class PageApprendrePourTypeChiffresComponent {
        this.nombreMax = utilisateurService.getNombreMax();
        this.nombreMin = utilisateurService.getNombreMin();
        this.chiffers = this.nombreMin
+  }
+
+  ngOnInit() {
+    this.erreurMax = false;
   }
   getRandomColorBackground(): string {
     let colorsBackground = Object.values(ColorsRandomBackground);
@@ -66,6 +70,7 @@ export class PageApprendrePourTypeChiffresComponent {
             this.nombreMax = value.max
             this.nombreMin = value.min
             this.chiffers = value.min
+            this.erreurMax = false;
           }
         }
       );

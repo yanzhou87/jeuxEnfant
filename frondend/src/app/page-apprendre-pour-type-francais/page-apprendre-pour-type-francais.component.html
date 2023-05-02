@@ -24,12 +24,12 @@
             <form class="was-validated">
               <div class="custom-control mb-3">
                 <label class="custom-control-label m-2">Entrez le nombre min : </label><br>
-                <input class="custom-control-input" required type="number" min="0" name="nombreMin" [(ngModel)]="nombreMinPourChiffreEnMot"><br>
-                <div class="text-danger">* Le nombre par défaut est 0</div>
+                <input class="custom-control-input" required type="number" min="0" max="0" name="nombreMin" [(ngModel)]="nombreMinPourChiffreEnMot"><br>
+                <div class="text-danger">* Le nombre ne peut pas modifier</div>
               </div>
               <div class="was-validated mb-3">
                 <label class="custom-control-label m-2">Entrez le nombre max : </label><br>
-                <input class="custom-control-input" required type="number" max="20" name="nombreMax" [(ngModel)]="nombreMaxPourChiffreEnMot"><br><br>
+                <input class="custom-control-input" required type="number" max="20" min="0" name="nombreMax" [(ngModel)]="nombreMaxPourChiffreEnMot"><br><br>
                 <div class="text-danger" *ngIf="erreurMaxPourChiffreEnMot">Le nombre max invalide, doit être supérieur au nombre min
                 </div>
               </div>

@@ -15,9 +15,9 @@ export class PageJeuPourTypeFrancaisComponent {
   randomColorBackground: string = this.getRandomColorBackground();
   randomColorButtonProchain: string = this.getRandomColorButtonProchain();
 
-  mot : string = '';
+  mot : string = 'Zero';
   numbreRandom : number = 0;
-  max : number = 21;
+  max : number = 0;
   min : number = 0;
 
   bonRepondre : number = 0;
@@ -35,18 +35,22 @@ export class PageJeuPourTypeFrancaisComponent {
     (async () => {
       try {
         this.bonRepondre = await this.utilisateurService.getBonRepondre();
-        console.log("bonRepondre :" + this.bonRepondre)
-        this.min = utilisateurService.getNombreMinEnMot()
-        this.max = utilisateurService.getNombreMaxEnMot()
+        this.min = await utilisateurService.getNombreMinEnMot()
+        this.max = await utilisateurService.getNombreMaxEnMot()
+        console.log("const bonRepondre :" + this.bonRepondre)
         this.listMots = await utilisateurService.getChiffreEnMot(this.max,this.min)
-        console.log("listMots : " + this.listMots.maListChiffreEnMot)
-        this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-        console.log("Random : " + this.numbreRandom)
-        this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]
-        console.log("mot : " + this.mot)
-        console.log("max111 : " + this.max + " : " + this.min)
-        this.myicon = this.utilisateurService.getIcon()
-        this.choisirLesRepondses();
+        console.log("const listMots : " + this.listMots.maListChiffreEnMot)
+        if (this.listMots.maListChiffreEnMot.length == 0 && this.min == 0){
+          this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - this.min + 1) + this.min);
+        } else{
+          this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - 1 - this.min + 1) + this.min);
+        }
+        console.log("const Random constuctor : " + this.numbreRandom)
+        this.mot = await this.listMots.maListChiffreEnMot[this.numbreRandom]
+        console.log("const mot : " + this.mot)
+        console.log("const max + min: " + this.max + " : " + this.min)
+        this.myicon = await this.utilisateurService.getIcon()
+        await this.choisirLesRepondses();
       } catch (err) {
         console.error(err);
       }
@@ -60,8 +64,6 @@ export class PageJeuPourTypeFrancaisComponent {
   }
 
   choisirLesRepondses(){
-    console.log("choisirLesRepondses"+this.bonRepondre)
-    console.log("max : "+this.max)
     if (this.bonRepondre == 1){
       this.nbRandomPourCard1 = this.numbreRandom
       this.nbRandomPourCard2 = this.nbFaux()
@@ -86,13 +88,12 @@ export class PageJeuPourTypeFrancaisComponent {
         this.nbRandomPourCard2 = this.nbFaux()
       }
     }
-    console.log("choisirLesRepondses"+this.bonRepondre)
   }
   nbFaux() : number{
     let randomNumber;
     do {
-      randomNumber = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-      console.log("randomNumber : "+randomNumber)
+        randomNumber = Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - this.min + 1) + this.min);
+        console.log("randomNumber dans nbFaux: " + randomNumber)
     } while (randomNumber == this.numbreRandom);
     return randomNumber;
   }
@@ -112,11 +113,16 @@ export class PageJeuPourTypeFrancaisComponent {
       (async () => {
         try {
           this.bonRepondre = await this.utilisateurService.getBonRepondre();
-          console.log("bonRepondre :" + this.bonRepondre)
+          console.log("get bonRepondre :" + this.bonRepondre)
           this.resultat = true
-          console.log("listMots : " + this.listMots.maListChiffreEnMot)
-          this.numbreRandom = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-          this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom-1]
+          console.log("get listMots : " + this.listMots.maListChiffreEnMot)
+          if (this.listMots.maListChiffreEnMot.length == 0 && this.min == 0){
+            this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - this.min + 1) + this.min);
+          } else{
+            this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - 1 - this.min + 1) + this.min);
+          }
+          this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom]
+          console.log("get mot : " + this.mot)
           this.myicon = this.utilisateurService.getIcon()
           this.randomColorBackground = this.getRandomColorBackground();
           this.randomColorButtonProchain = this.getRandomColorButtonProchain();
