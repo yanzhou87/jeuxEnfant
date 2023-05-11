@@ -27,6 +27,9 @@ export class PageApprendrePourTypeFrancaisComponent {
       try {
         await this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot,this.nombreMinPourChiffreEnMot);
         this.monChiffresEnFrancais.maListChiffreEnMot = await this.utilisateurService.getChiffreEnFrancais();
+        if(this.nombreMaxPourChiffreEnMot == 0 ){
+          this.nombreMaxPourChiffreEnMot = 20;
+        }
       } catch (err) {
         console.error(err);
       }
@@ -76,9 +79,13 @@ export class PageApprendrePourTypeFrancaisComponent {
     }else {
       (async () => {
         try {
+          this.chiffreCourant = 0;
           await this.utilisateurService.getChiffreEnMot(this.nombreMaxPourChiffreEnMot,this.nombreMinPourChiffreEnMot);
           this.monChiffresEnFrancais.maListChiffreEnMot = this.utilisateurService.getChiffreEnFrancais();
           this.chiffreCourantEnMot = this.monChiffresEnFrancais.maListChiffreEnMot[0]
+          if(this.nombreMaxPourChiffreEnMot == 0 ){
+            this.nombreMaxPourChiffreEnMot = 20;
+          }
         } catch (err) {
           console.error(err);
         }

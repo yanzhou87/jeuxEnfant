@@ -37,18 +37,13 @@ export class PageJeuPourTypeFrancaisComponent {
         this.bonRepondre = await this.utilisateurService.getBonRepondre();
         this.min = await utilisateurService.getNombreMinEnMot()
         this.max = await utilisateurService.getNombreMaxEnMot()
-        console.log("const bonRepondre :" + this.bonRepondre)
         this.listMots = await utilisateurService.getChiffreEnMot(this.max,this.min)
-        console.log("const listMots : " + this.listMots.maListChiffreEnMot)
         if (this.listMots.maListChiffreEnMot.length == 0 && this.min == 0){
           this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - this.min + 1) + this.min);
         } else{
           this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - 1 - this.min + 1) + this.min);
         }
-        console.log("const Random constuctor : " + this.numbreRandom)
         this.mot = await this.listMots.maListChiffreEnMot[this.numbreRandom]
-        console.log("const mot : " + this.mot)
-        console.log("const max + min: " + this.max + " : " + this.min)
         this.myicon = await this.utilisateurService.getIcon()
         await this.choisirLesRepondses();
       } catch (err) {
@@ -125,6 +120,7 @@ export class PageJeuPourTypeFrancaisComponent {
           this.randomColorButtonProchain = this.getRandomColorButtonProchain();
           this.utilisateurService.setBonResultatDeTonChoix(true)
           this.choisirLesRepondses();
+
         } catch (err) {
           console.error(err);
         }
