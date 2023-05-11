@@ -113,16 +113,13 @@ export class PageJeuPourTypeFrancaisComponent {
       (async () => {
         try {
           this.bonRepondre = await this.utilisateurService.getBonRepondre();
-          console.log("get bonRepondre :" + this.bonRepondre)
           this.resultat = true
-          console.log("get listMots : " + this.listMots.maListChiffreEnMot)
           if (this.listMots.maListChiffreEnMot.length == 0 && this.min == 0){
             this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - this.min + 1) + this.min);
           } else{
             this.numbreRandom = await Math.floor(Math.random() * (this.listMots.maListChiffreEnMot.length - 1 - this.min + 1) + this.min);
           }
           this.mot = this.listMots.maListChiffreEnMot[this.numbreRandom]
-          console.log("get mot : " + this.mot)
           this.myicon = this.utilisateurService.getIcon()
           this.randomColorBackground = this.getRandomColorBackground();
           this.randomColorButtonProchain = this.getRandomColorButtonProchain();
